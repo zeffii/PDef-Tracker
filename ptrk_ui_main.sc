@@ -13,7 +13,7 @@ GUI.qt;
 
 Window.closeAll;
 
-w = Window.new("PDef Tracker", Rect.new(340, 170, 1120, 770))
+w = Window.new("ptrk", Rect.new(340, 170, 1120, 770))
 .front
 .alwaysOnTop_(true);
 
@@ -36,10 +36,14 @@ w.drawFunc_{|me|
 
 	// draw rows
 	~darkrow = Color(0.6, 0.6, 0.6, 0.1);
-	~lightrow = Color(0.8, 0.8, 0.8, 0.1);
-	~darkrow.setFill;
+	~lightrow = Color(0.7, 0.7, 0.7, 0.1);
+	~color_list = [~lightrow, ~darkrow];
 
 	32.do { |jdx|
+
+		var this_idx = 0;
+		this_idx = ((jdx % 4) < 1).asInteger;
+		~color_list[this_idx].setFill;
 
 		~lineheight = 20;
 		~ypos = 43;
@@ -77,3 +81,4 @@ w.front; // something safe to type on
 )
 
 w.close;
+
