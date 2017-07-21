@@ -13,7 +13,7 @@ GUI.qt;
 
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(340, 170, 1120, 770))
+w = Window.new("ptrk", Rect.new(340, 330, 1560, 720))
 .front
 .alwaysOnTop_(true);
 
@@ -21,9 +21,10 @@ w.drawFunc_{|me|
 
 	~textfont = "Consolas";
 	~textcol = Color(0.6, 0.6, 0.6, 0.4);
+    ~num_tracks = 12;
 
 	// draw header
-    6.do { |idx|
+    ~num_tracks.do { |idx|
         var offsetx = 90;
 		var header_x = 95;
 		var text_ypos = 22;
@@ -49,7 +50,7 @@ w.drawFunc_{|me|
 		~ypos = 43;
 
 		// draw rects
-		6.do { |idx|
+		~num_tracks.do { |idx|
 			var startx = 60;
 			var offsetx = 90;
 
