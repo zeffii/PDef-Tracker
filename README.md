@@ -4,9 +4,9 @@ Tracker implementation for Supercollider 3.x
 
 ## 
 
-Don't get excited yet, none of this works. If you can still read this message, then it's not even usable yet.
+Based loosely on ImpulseTracker, the ultimate tracker. This attempt is inspired by the frustration I face when using newer and cooler trackers like Buzz/buze/sunvox. 
 
-Based loosely on ImpulseTracker/Buzz
+Don't get excited yet, none of this works. If you can still read this message, then it's not even usable yet.
 
 Here's the todo:
 
@@ -20,11 +20,13 @@ Here's the todo:
 - [ ] make sample panning ADSR 
 - [ ] make sample bank storage
 - [ ] make sample bank loader ui
-- [ ] make sample trigger pads (keyboard )
+- [ ] make sample trigger pads (keyboard)
 
 **Milestone 2**
 
 - [ ] represent pattern notes in pianoroll like ui
-- [ ] make synthdef loader/bank
+- [ ] make synthdef/unit loader/bank
+- [ ] make node tree view
+- [ ] allow hot routing of units
 
 If it gets this far more will come.
