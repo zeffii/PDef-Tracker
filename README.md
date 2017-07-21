@@ -39,3 +39,7 @@ Here's the todo:
     - [ ] muting tracks, (single, multiple)
 
 If it gets this far more will come.
+
+# Current Progress
+
+![ptrkcapture](https://user-images.githubusercontent.com/619340/28475090-3f37dd9a-6e4b-11e7-959a-5080ada3d7d5.PNG)
