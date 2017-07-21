@@ -59,7 +59,7 @@ w.drawFunc_{|me|
 
 	// draw highlight cell
 
-	Color(0.3, 0.8, 0.8, 0.4).setFill;
+	Color(0.2, 0.8, 0.8, 0.1).setFill;
 	Pen.addRect(Rect(60 + (~local_offsetx*~cursor_cell[0]), ~ypos + (~lineheight*~cursor_cell[1]), 86, 18));
 	Pen.fill;
 
