@@ -20,6 +20,8 @@ Synth(\hatsound, [\freq, 1220, \dur, 0.1]);
 
 (
 
+~num_tracks = 6;
+~num_rows = 16;
 ~cursor_cell = [0, 0];
 
 ~cursor_highlight = {
@@ -31,8 +33,8 @@ Synth(\hatsound, [\freq, 1220, \dur, 0.1]);
       38, { ~cursor_cell[1] = ~cursor_cell[1] - 1 },    // up
       40, { ~cursor_cell[1] = ~cursor_cell[1] + 1 }     // down
     );
-    ~cursor_cell[0] = ~cursor_cell[0] % 12;
-    ~cursor_cell[1] = ~cursor_cell[1] % 32;
+    ~cursor_cell[0] = ~cursor_cell[0] % ~num_tracks;
+    ~cursor_cell[1] = ~cursor_cell[1] % ~num_rows;
     ~cursor_cell.postln;
 };
 
@@ -41,18 +43,18 @@ GUI.qt;
 
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(340, 330, 1560, 720))
+w = Window.new("ptrk", Rect.new(840, 330, 1060, 720))
 .front
 .alwaysOnTop_(true);
 
+~ypos = 43;
+~lineheight = 20;
+~textfont = "Consolas";
+~textcol = Color(0.7, 0.7, 0.7, 1.0);
+~local_offsetx = 90;
+
 w.drawFunc_{|me|
 
-    ~ypos = 43;
-    ~lineheight = 20;
-    ~textfont = "Consolas";
-    ~textcol = Color(0.7, 0.7, 0.7, 1.0);
-    ~num_tracks = 12;
-    ~local_offsetx = 90;
 
     // draw header
     ~num_tracks.do { |idx|
@@ -61,7 +63,8 @@ w.drawFunc_{|me|
         var text_ypos = 22;
 
         // channel text
-        t = StaticText.new(w, Rect(header_x + (~local_offsetx*idx), text_ypos, 58, 20)).string_(idx.asString).align_(\left);
+        t = StaticText.new(
+            w, Rect(header_x + (~local_offsetx*idx), text_ypos, 58, 20)).string_(idx.asString).align_(\left);
         t.font = Font(~textfont, 11);
         t.stringColor_(~textcol);
     };
@@ -71,7 +74,7 @@ w.drawFunc_{|me|
     ~lightrow = Color(0.84, 0.84, 0.84, 1.0);
     ~color_list = [~lightrow, ~darkrow];
 
-    32.do { |jdx|
+    ~num_rows.do { |jdx|
 
         var this_idx = 0;
         this_idx = ((jdx % 4) < 1).asInteger;
@@ -93,21 +96,34 @@ w.drawFunc_{|me|
     };
 
     // draw highlight cell
-
     Color(0.6, 0.8, 0.88, 1.0).setFill;
-    Pen.addRect(Rect(60 + (~local_offsetx*~cursor_cell[0]), ~ypos + (~lineheight*~cursor_cell[1]), 86, 18));
+    Pen.addRect(
+         Rect(60 + (~local_offsetx*~cursor_cell[0]),
+    ~ypos + (~lineheight*~cursor_cell[1]), 86, 18));
     Pen.fill;
 
-
-
 };
+//
+// q = CompositeView.new(w, Rect(0, 0, 1220, 390));
+// q.enabled = true;
+// // q.drawFunc = {|mee|
+// //     Color(0.6, 0.8, 0.88, 1.0).setFill;
+// //     Pen.addRect(
+// //         Rect(60 + (~local_offsetx*~cursor_cell[0]),
+// //     ~ypos + (~lineheight*~cursor_cell[1]), 86, 18));
+// //     Pen.fill;
+// // };
+
+
 
 w.view.keyDownAction = {
     arg view, char, modifiers, unicode, keycode;
     [keycode].postln; //, modifiers, unicode].postln;
     ~cursor_highlight.value(keycode);
-    // w.refresh;
+	w.clear;
+    w.refresh;
     Synth(\hatsound, [\freq, 1220, \dur, 0.01]);
+
 
 };
 w.front;
