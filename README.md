@@ -37,6 +37,8 @@ Here's the todo:
     - [ ] loading samples
     - [ ] rerouting units
     - [ ] muting tracks, (single, multiple)
+- [ ] 8 bit mask generator
+- [ ] 16 bit mask generator, (8 bit repeater with random bitrot on repeated)
 
 If it gets this far more will come.
 
