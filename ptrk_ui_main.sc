@@ -1,5 +1,21 @@
 s.boot;
 
+
+(
+SynthDef("hatsound", {
+	arg freq=440, dur=0.5;
+	var outArray, mamp;
+	mamp = Line.kr(0.2, 0, dur, doneAction: 2);
+    outArray = [PinkNoise.ar(mul: mamp), PinkNoise.ar(mul: mamp)];
+	outArray = HPF.ar(outArray, freq);
+    Out.ar(0, outArray);
+}).add;
+
+)
+
+Synth(\hatsound, [\freq, 1220, \dur, 0.1]);
+
+
 // execute first
 
 (
@@ -8,23 +24,16 @@ s.boot;
 
 ~cursor_highlight = {
 	| keycode |
-	/*
-	38 up
-	40 down
-	37 left
-	39 right
-	*/
-	switch (keycode,
 
-	  39, {	~cursor_cell[0] = ~cursor_cell[0] + 1 },
-	  37, {	~cursor_cell[0] = ~cursor_cell[0] - 1 },
-	  38, {	~cursor_cell[1] = ~cursor_cell[1] - 1 },
-	  40, {	~cursor_cell[1] = ~cursor_cell[1] + 1 }
+	switch (keycode,
+	  39, {	~cursor_cell[0] = ~cursor_cell[0] + 1 },    // right
+	  37, {	~cursor_cell[0] = ~cursor_cell[0] - 1 },    // left
+	  38, {	~cursor_cell[1] = ~cursor_cell[1] - 1 },    // up
+	  40, {	~cursor_cell[1] = ~cursor_cell[1] + 1 }     // down
 	);
 	~cursor_cell[0] = ~cursor_cell[0] % 12;
 	~cursor_cell[1] = ~cursor_cell[1] % 32;
 	~cursor_cell.postln;
-
 };
 
 
@@ -97,6 +106,8 @@ w.view.keyDownAction = {
 	[keycode].postln; //, modifiers, unicode].postln;
 	~cursor_highlight.value(keycode);
 	// w.refresh;
+	Synth(\hatsound, [\freq, 1220, \dur, 0.01]);
+
 };
 w.front;
 )
@@ -104,7 +115,7 @@ w.front;
 // execute second
 (
 w.front; // something safe to type on
-{ SinOsc.ar(800, 0, KeyState.kr(38, 0, 0.1)) }.play;
+//{ SinOsc.ar(800, 0, KeyState.kr(38, 0, 0.1)) }.play;
 )
 
 w.close;
