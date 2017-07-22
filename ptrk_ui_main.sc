@@ -43,7 +43,7 @@ GUI.qt;
 
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(840, 330, 1060, 720))
+w = Window.new("ptrk", Rect.new(1240, 530, 660, 520))
 .front
 .alwaysOnTop_(true);
 
@@ -122,7 +122,7 @@ w.view.keyDownAction = {
     ~cursor_highlight.value(keycode);
 	w.clear;
     w.refresh;
-    Synth(\hatsound, [\freq, 1220, \dur, 0.01]);
+    Synth(\hatsound, [\freq, 1220, \dur, 0.1]);
 
 
 };
