@@ -54,7 +54,7 @@ w.drawFunc_{|me|
         t = StaticText.new(
             w,
             Rect(header_x + (~local_offsetx*idx), text_ypos, 58, 20)
-        ).string_(idx.asString).align_(\left);
+            ).string_(idx.asString).align_(\left);
         t.font = Font(~textfont, 11);
         t.stringColor_(~textcol);
     };
@@ -64,7 +64,7 @@ w.drawFunc_{|me|
         t = StaticText.new(
             w,
             Rect(-4, ~ypos + (~lineheight*jdx), 58, 20)
-        ).string_(jdx.asString).align_(\right);
+            ).string_(jdx.asString).align_(\right);
         t.font = Font(~textfont, 13);
         t.stringColor_(~textcol);
     };
