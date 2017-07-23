@@ -19,7 +19,7 @@ s.boot;
 
 
 ~cursor_highlight = {
-	| keycode |
+    | keycode |
     switch (keycode,
       39, { ~cursor_cell[0] = ~cursor_cell[0] + 1 },    // right
       37, { ~cursor_cell[0] = ~cursor_cell[0] - 1 },    // left
@@ -35,11 +35,11 @@ GUI.qt;
 Window.closeAll;
 
 w = Window.new("ptrk", Rect.new(1240, 530, 660, 520))
-  .front
-  .alwaysOnTop_(true);
+    .front
+    .alwaysOnTop_(true);
 
 u = UserView(w, Rect(60,43, 650, 500))
-  .backColor_(Color(0.88, 0.88, 0.88, 1.0));
+    .backColor_(Color(0.88, 0.88, 0.88, 1.0));
 
 
 w.drawFunc_{|me|
@@ -53,8 +53,8 @@ w.drawFunc_{|me|
         // channel text
         t = StaticText.new(
             w,
-			Rect(header_x + (~local_offsetx*idx), text_ypos, 58, 20)
-		    ).string_(idx.asString).align_(\left);
+            Rect(header_x + (~local_offsetx*idx), text_ypos, 58, 20)
+        ).string_(idx.asString).align_(\left);
         t.font = Font(~textfont, 11);
         t.stringColor_(~textcol);
     };
@@ -62,12 +62,12 @@ w.drawFunc_{|me|
     // draw row numbers
     ~num_rows.do { |jdx|
         t = StaticText.new(
-			w,
-			Rect(-4, ~ypos + (~lineheight*jdx), 58, 20)
-		    ).string_(jdx.asString).align_(\right);
+            w,
+            Rect(-4, ~ypos + (~lineheight*jdx), 58, 20)
+        ).string_(jdx.asString).align_(\right);
         t.font = Font(~textfont, 13);
         t.stringColor_(~textcol);
-	};
+    };
 
 };
 
@@ -78,7 +78,7 @@ u.drawFunc_{|me|
     ~num_rows.do { |jdx|
         var this_idx = 0;
 
-		this_idx = ((jdx % 4) < 1).asInteger;
+        this_idx = ((jdx % 4) < 1).asInteger;
         ~color_list[this_idx].setFill;
 
         // draw rects
