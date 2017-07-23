@@ -38,8 +38,8 @@ w = Window.new("ptrk", Rect.new(1240, 530, 660, 520))
   .front
   .alwaysOnTop_(true);
 
-u = UserView(w, Rect(60,43, 650, 500));
-u.backColor_(Color(0.88, 0.88, 0.88, 1.0));
+u = UserView(w, Rect(60,43, 650, 500))
+  .backColor_(Color(0.88, 0.88, 0.88, 1.0));
 
 
 w.drawFunc_{|me|
@@ -71,8 +71,8 @@ w.drawFunc_{|me|
 
 };
 
-u.drawFunc_{|me|
 
+u.drawFunc_{|me|
 
     // draw rows
     ~num_rows.do { |jdx|
