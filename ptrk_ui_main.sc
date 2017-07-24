@@ -171,12 +171,14 @@ u.keyDownAction = {
 
     if (~edit_state, {
         ~temp_string = ~temp_string + char;
-        ~keycode_to_note.value(keycode, ~octave_edit).postln;
+        ~tfnote = ~keycode_to_note.value(keycode, ~octave_edit);
+        // ~pattern_matrix[~cursor_cell[0],~cursor_cell[1]] = ~tfnote;
+        // w.refresh;
     },{
         ~temp_string = "";
     });
 
-    ~temp_string.postln;
+    // ~temp_string.postln;
     u.refresh;
 };
 
