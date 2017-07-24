@@ -3,7 +3,19 @@ s.boot;
 // -- execute first
 (
 
+~num_tracks = 6;
+~num_rows = 16;
+
+~temp_string = "";
+~pattern_matrix = Array2D.new(~num_tracks, ~num_rows);
+~num_rows.do { |jdx|
+    ~num_tracks.do{ |idx|
+        ~pattern_matrix[idx, jdx] = "... .. .. ......";
+    };
+};
+
 ~edit_state = false;
+~octave_edit = 5;
 
 ~textcol = Color(0.7, 0.7, 0.7, 1.0);
 ~darkrow = Color(0.8, 0.8, 0.8, 1.0);
@@ -14,8 +26,6 @@ s.boot;
 ~state_off = Color(0.0, 0, 0, 1.0);
 ~show_states = [~state_on, ~state_off];
 
-~num_tracks = 6;
-~num_rows = 16;
 
 ~ypos = 43;
 ~lineheight = 20;
@@ -28,15 +38,38 @@ s.boot;
 ~cursor_highlight = {
     | keycode |
     switch (keycode,
-      39, { ~cursor_cell[0] = ~cursor_cell[0] + 1 },    // right
-      37, { ~cursor_cell[0] = ~cursor_cell[0] - 1 },    // left
-      38, { ~cursor_cell[1] = ~cursor_cell[1] - 1 },    // up
-      40, { ~cursor_cell[1] = ~cursor_cell[1] + 1 }     // down
+        39, { ~cursor_cell[0] = ~cursor_cell[0] + 1 },    // right
+        37, { ~cursor_cell[0] = ~cursor_cell[0] - 1 },    // left
+        38, { ~cursor_cell[1] = ~cursor_cell[1] - 1 },    // up
+        40, { ~cursor_cell[1] = ~cursor_cell[1] + 1 }     // down
     );
     ~cursor_cell[0] = ~cursor_cell[0] % ~num_tracks;
     ~cursor_cell[1] = ~cursor_cell[1] % ~num_rows;
 };
 
+~keycode_to_note = {
+    | keycode, octave |
+    switch (keycode,
+        // upper row of keyjazz keys
+        81, {"C-" ++ octave.asString;},  // q
+        50, {"C#" ++ octave.asString;},  // 2
+        87, {"D-" ++ octave.asString;},  // w
+        51, {"D#" ++ octave.asString;},  // 3
+        69, {"E-" ++ octave.asString;},  // e
+        82, {"F-" ++ octave.asString;},  // r
+        53, {"F#" ++ octave.asString;},  // 5
+        84, {"G-" ++ octave.asString;},  // t
+        54, {"G#" ++ octave.asString;},  // 6
+        89, {"A-" ++ octave.asString;},  // y
+        55, {"A#" ++ octave.asString;},  // 7
+        85, {"B-" ++ octave.asString;},  // u
+        73, {"C-" ++ (octave + 1).asString;},  // i
+        57, {"D#" ++ (octave + 1).asString;},  // 9
+        79, {"D-" ++ (octave + 1).asString;},  // o
+        48, {"D#" ++ (octave + 1).asString;},  // 0
+        80, {"E-" ++ (octave + 1).asString;}   // p
+    )
+};
 
 GUI.qt;
 Window.closeAll;
@@ -92,11 +125,10 @@ w.drawFunc_{|me|
             Pen.fill;
 
             ~atx = StaticText(w, ~tb_rect);
-            ~atx.string = "... .. .. ......";
+            ~atx.string = ~pattern_matrix[idx, jdx];
             ~atx.font = "Consolas";
             ~atx.background = Color(0, 0, 0, 0.0);
             ~atx.stringColor = Color(0.3, 0.6, 0.7, 1.0);
-
         };
 
     };
@@ -109,6 +141,7 @@ u.drawFunc_{|me|
 
     // draw highlight cell
     Color(0.6, 0.8, 0.88, 1.0).setFill;
+    // Color(1, 1, 1, 1.0).setStroke;
     Pen.addRect(
         Rect(
         ~local_offsetx*~cursor_cell[0],
@@ -116,6 +149,7 @@ u.drawFunc_{|me|
         ~cell_width,
         18)
     );
+    // Pen.stroke;
     Pen.fill;
 
     ~show_states[~edit_state.asInteger].setFill;
@@ -135,6 +169,14 @@ u.keyDownAction = {
         32, { ~edit_state = ~edit_state.not;}
     );
 
+    if (~edit_state, {
+        ~temp_string = ~temp_string + char;
+        ~keycode_to_note.value(keycode, ~octave_edit).postln;
+    },{
+        ~temp_string = "";
+    });
+
+    ~temp_string.postln;
     u.refresh;
 };
 
