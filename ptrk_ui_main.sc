@@ -13,7 +13,8 @@ s.boot;
 
 ~ypos = 43;
 ~lineheight = 20;
-~local_offsetx = 90;
+~cell_width = 97;
+~local_offsetx = ~cell_width*1.04;
 ~cursor_cell = [0, 0];
 ~textfont = "Consolas";
 
@@ -34,12 +35,12 @@ s.boot;
 GUI.qt;
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(1240, 530, 660, 520))
+w = Window.new("ptrk", Rect.new(1140, 530, 760, 520))
     .front
     .alwaysOnTop_(true);
 
-u = UserView(w, Rect(60,43, 650, 500))
-    .backColor_(Color(0.88, 0.88, 0.88, 0.1));
+u = UserView(w, Rect(60,43, 750, 500))
+    .backColor_(Color(0.9, 0.9, 0.9, 0.2));
 
 
 w.drawFunc_{|me|
@@ -80,13 +81,16 @@ w.drawFunc_{|me|
 
         // draw rects
         ~num_tracks.do { |idx|
-            ~tb_rect = Rect(60 + (~local_offsetx*idx), 43 + (~lineheight*jdx), 86, 18);
-            Pen.addRect(Rect(60 + (~local_offsetx*idx), 43 + (~lineheight*jdx), 86, 18));
+            ~tb_rect = Rect(60 + (~local_offsetx*idx), 43 + (~lineheight*jdx), ~cell_width, 18);
+            Pen.addRect(~tb_rect);
             Pen.fill;
-            ~atx = TextField(w, ~tb_rect);
-            ~atx.string = "... .. ......";
+
+            ~atx = StaticText(w, ~tb_rect);
+            ~atx.string = "... .. .. ......";
             ~atx.font = "Consolas";
-            ~atx.background = Color(0,0,0,0.0);
+            ~atx.background = Color(0, 0, 0, 0.0);
+            ~atx.stringColor = Color(0.3, 0.6, 0.7, 1.0);
+
         };
 
     };
@@ -101,7 +105,7 @@ u.drawFunc_{|me|
     Color(0.6, 0.8, 0.88, 1.0).setFill;
     Pen.addRect(
          Rect((~local_offsetx*~cursor_cell[0]),
-    (~lineheight*~cursor_cell[1]), 86, 18));
+    (~lineheight*~cursor_cell[1]), ~cell_width, 18));
     Pen.fill;
 
 };
