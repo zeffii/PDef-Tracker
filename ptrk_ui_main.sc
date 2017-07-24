@@ -39,14 +39,15 @@ w = Window.new("ptrk", Rect.new(1240, 530, 660, 520))
     .alwaysOnTop_(true);
 
 u = UserView(w, Rect(60,43, 650, 500))
-    .backColor_(Color(0.88, 0.88, 0.88, 1.0));
+    .backColor_(Color(0.88, 0.88, 0.88, 0.1));
 
 
 w.drawFunc_{|me|
 
+    var offsetx = 90;
+
     // draw header numbers
     ~num_tracks.do { |idx|
-        var offsetx = 90;
         var header_x = 95;
         var text_ypos = 22;
 
@@ -69,25 +70,32 @@ w.drawFunc_{|me|
         t.stringColor_(~textcol);
     };
 
-};
-
-
-u.drawFunc_{|me|
-
     // draw rows
     ~num_rows.do { |jdx|
         var this_idx = 0;
 
         this_idx = ((jdx % 4) < 1).asInteger;
-        ~color_list[this_idx].setFill;
+        ~fillColorCell = ~color_list[this_idx];
+        ~fillColorCell.setFill;
 
         // draw rects
         ~num_tracks.do { |idx|
-            Pen.addRect(Rect(~local_offsetx*idx, (~lineheight*jdx), 86, 18));
+            ~tb_rect = Rect(60 + (~local_offsetx*idx), 43 + (~lineheight*jdx), 86, 18);
+            Pen.addRect(Rect(60 + (~local_offsetx*idx), 43 + (~lineheight*jdx), 86, 18));
             Pen.fill;
+            ~atx = TextField(w, ~tb_rect);
+            ~atx.string = "... .. ......";
+            ~atx.font = "Consolas";
+            ~atx.background = Color(0,0,0,0.0);
         };
 
     };
+
+};
+
+
+u.drawFunc_{|me|
+
 
     // draw highlight cell
     Color(0.6, 0.8, 0.88, 1.0).setFill;
