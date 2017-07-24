@@ -3,10 +3,16 @@ s.boot;
 // -- execute first
 (
 
+~edit_state = false;
+
 ~textcol = Color(0.7, 0.7, 0.7, 1.0);
 ~darkrow = Color(0.8, 0.8, 0.8, 1.0);
 ~lightrow = Color(0.84, 0.84, 0.84, 1.0);
 ~color_list = [~lightrow, ~darkrow];
+
+~state_on = Color(1.0, 0, 0, 1.0);
+~state_off = Color(0.0, 0, 0, 1.0);
+~show_states = [~state_on, ~state_off];
 
 ~num_tracks = 6;
 ~num_rows = 16;
@@ -104,8 +110,16 @@ u.drawFunc_{|me|
     // draw highlight cell
     Color(0.6, 0.8, 0.88, 1.0).setFill;
     Pen.addRect(
-         Rect((~local_offsetx*~cursor_cell[0]),
-    (~lineheight*~cursor_cell[1]), ~cell_width, 18));
+        Rect(
+        ~local_offsetx*~cursor_cell[0],
+        ~lineheight*~cursor_cell[1],
+        ~cell_width,
+        18)
+    );
+    Pen.fill;
+
+    ~show_states[~edit_state.asInteger].setFill;
+    Pen.addOval(Rect(0, 0, 4, 4));
     Pen.fill;
 
 };
@@ -113,9 +127,14 @@ u.drawFunc_{|me|
 
 
 u.keyDownAction = {
-    arg view, char, modifiers, unicode, keycode;
-    // [keycode].postln; //, modifiers, unicode].postln;
+    | view, char, modifiers, unicode, keycode |
     ~cursor_highlight.value(keycode);
+
+    // keycode.postln;
+    switch (keycode,
+        32, { ~edit_state = ~edit_state.not;}
+    );
+
     u.refresh;
 };
 
