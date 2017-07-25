@@ -10,27 +10,22 @@ s.boot;
     empty_str;
 };
 
-GUI.qt;
-Window.closeAll;
-
-w = Window.new("ptrk", Rect.new(1140, 530, 760, 520))
-    .front
-    .alwaysOnTop_(true);
-
-u = UserView(w, Rect(60,43, 750, 500))
-    .backColor_(Color(0.88, 0.88, 0.88, 1.0));
-
 ~text_font = "Consolas";
+
+~cell_darker = Color(0.8, 0.8, 0.8, 1.0);
+~cell_dark = Color(0.82, 0.82, 0.82, 1.0);
+~cell_light = Color(0.84, 0.84, 0.84, 1.0);
+~cell_colors = [~cell_darker, ~cell_dark, ~cell_light];
 
 // pattern variables
 ~num_cols = 4;
 ~num_rows = 16;
 ~subcell_color = Color(0.6, 0.8, 0.88, 1.0);
 ~cell_x_offset = 4;
-~cell_y_offset = 4;
+~cell_y_offset = 2;
 
 // cell variables
-~split = 0.5;
+~split = 0.36;
 ~subcells = [3, ~split, 2,~split, 2, ~split, 2, 4];
 ~char_width = 8;
 ~cell_height = 16;
@@ -42,9 +37,19 @@ tab / shift-tab   |  jump to next / previous  cell
 left / right      |  jump to next / previous  subcell
 up / down         |  updown cell, retaining subcell position.
 
-
-
 */
+
+
+GUI.qt;
+Window.closeAll;
+
+w = Window.new("ptrk", Rect.new(1140, 530, 760, 520))
+    .front
+    .alwaysOnTop_(true);
+
+u = UserView(w, Rect(60,43, 750, 500))
+    .backColor_(Color(0.72, 0.82, 0.89, 1.0));
+
 
 u.drawFunc_{ |tview|
 
@@ -55,14 +60,14 @@ u.drawFunc_{ |tview|
             ypos = idx * (~cell_y_offset + ~cell_height );
 
             // background cell
-            Color(0.84, 0.84, 0.84, 1.0).setFill;
-            Pen.addRect(Rect(xpos, ypos, ~cell_width, ~cell_height));
-            Pen.fill;
+            ~cell_colors[2].setFill;
+            // Pen.addRect(Rect(xpos, ypos, ~cell_width, ~cell_height));
+            // Pen.fill;
 
             ~subcellx = 0;
             ~subcells.do { |vdx, ndx |
                 ~text_rect = Rect(~subcellx + xpos, ypos, vdx*~char_width, ~cell_height);
-                // Color(0.82, 0.94, 0.99, 1.0).setFill;
+
                 if (vdx > ~split, {
                     ~tv = StaticText(u, ~text_rect);
                     //~tv.string_("C-4");
