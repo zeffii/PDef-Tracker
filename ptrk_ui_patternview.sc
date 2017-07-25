@@ -18,7 +18,7 @@ w = Window.new("ptrk", Rect.new(1140, 530, 760, 520))
     .alwaysOnTop_(true);
 
 u = UserView(w, Rect(60,43, 750, 500))
-    .backColor_(Color(0.9, 0.9, 0.9, 0.5));
+    .backColor_(Color(0.88, 0.88, 0.88, 1.0));
 
 ~text_font = "Consolas";
 
@@ -31,7 +31,7 @@ u = UserView(w, Rect(60,43, 750, 500))
 
 // cell variables
 ~split = 0.5;
-~subcells = [3, ~split, 2,~split, 2, ~split, 6];
+~subcells = [3, ~split, 2,~split, 2, ~split, 2, 4];
 ~char_width = 8;
 ~cell_height = 16;
 ~cell_width = (~subcells*~char_width).sum;
@@ -60,7 +60,7 @@ u.drawFunc_{ |tview|
             Pen.fill;
 
             ~subcellx = 0;
-            ~subcells.do { |vdx |
+            ~subcells.do { |vdx, ndx |
                 ~text_rect = Rect(~subcellx + xpos, ypos, vdx*~char_width, ~cell_height);
                 // Color(0.82, 0.94, 0.99, 1.0).setFill;
                 if (vdx > ~split, {
@@ -69,6 +69,9 @@ u.drawFunc_{ |tview|
                     ~tv.string = ~repeat_str.value(".", vdx);
                     ~tv.align = \left;
                     ~tv.stringColor = Color(0.98, 0.97, 0.97, 1.0);
+                    if (ndx == 7, {
+                        ~tv.stringColor = Color(0.53, 0.73, 0.93, 1.0);
+                    });
                     ~tv.font = Font("Fixedsys", 13);
                     ~tv.background = Color(0.82, 0.91, 0.96, 1.0);
 
