@@ -45,12 +45,23 @@ u.drawFunc_{ |tview|
             ypos = idx * (~cell_y_offset + ~cell_height );
 
             // background cell
-            Color(0.9, 0.9, 0.9, 1.0).setFill;
+            Color(0.95, 0.95, 0.95, 1.0).setFill;
             Pen.addRect(Rect(xpos, ypos, ~cell_width, ~cell_height));
             Pen.fill;
 
+            ~subcellx = 0;
             ~subcells.do { |vdx |
+                ~text_rect = Rect(~subcellx + xpos, ypos, vdx*~char_width, ~cell_height);
+                // Color(0.82, 0.94, 0.99, 1.0).setFill;
+                if (vdx > ~split, {
+                    ~tv = StaticText(u, ~text_rect);
+                    ~tv.string("===");
+                    ~tv.font = "Consolas";
+                    ~tv.background = Color(0.8, 0.9, 0.9, 0.5);
+                    ~tv.stringColor = Color(0.3, 0.3, 0.3, 1.0);
 
+                },{});
+                ~subcellx = (~subcellx + (~char_width * vdx));
             };
 
         };
