@@ -12,8 +12,8 @@ s.boot;
 
 ~text_font = "Consolas";
 
-~cell_darker = Color(0.8, 0.8, 0.8, 1.0);
-~cell_dark = Color(0.82, 0.82, 0.82, 1.0);
+~cell_darker = Color(0.5, 0.8, 0.9, 1.0);
+~cell_dark = Color(0.32, 0.82, 0.92, 1.0);
 ~cell_light = Color(0.84, 0.84, 0.84, 1.0);
 ~cell_colors = [~cell_darker, ~cell_dark, ~cell_light];
 
@@ -54,6 +54,7 @@ u = UserView(w, Rect(60,43, 750, 500))
 u.drawFunc_{ |tview|
 
     ~num_rows.do { |idx |
+        ~cell_color = ~cell_colors[((idx % 4) < 1).asInteger];
         ~num_cols.do { | jdx |
             var xpos, ypos;
             xpos = jdx * (~cell_x_offset + ~cell_width );
@@ -70,7 +71,6 @@ u.drawFunc_{ |tview|
 
                 if (vdx > ~split, {
                     ~tv = StaticText(u, ~text_rect);
-                    //~tv.string_("C-4");
                     ~tv.string = ~repeat_str.value(".", vdx);
                     ~tv.align = \left;
                     ~tv.stringColor = Color(0.98, 0.97, 0.97, 1.0);
@@ -78,7 +78,7 @@ u.drawFunc_{ |tview|
                         ~tv.stringColor = Color(0.53, 0.73, 0.93, 1.0);
                     });
                     ~tv.font = Font("Fixedsys", 13);
-                    ~tv.background = Color(0.82, 0.91, 0.96, 1.0);
+                    ~tv.background = ~cell_color
 
                 },{});
                 ~subcellx = (~subcellx + (~char_width * vdx));
