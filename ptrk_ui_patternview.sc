@@ -60,11 +60,6 @@ u.drawFunc_{ |tview|
             xpos = jdx * (~cell_x_offset + ~cell_width );
             ypos = idx * (~cell_y_offset + ~cell_height );
 
-            // background cell
-            ~cell_colors[2].setFill;
-            // Pen.addRect(Rect(xpos, ypos, ~cell_width, ~cell_height));
-            // Pen.fill;
-
             ~subcellx = 0;
             ~subcells.do { |vdx, ndx |
                 ~text_rect = Rect(~subcellx + xpos, ypos, vdx*~char_width, ~cell_height);
