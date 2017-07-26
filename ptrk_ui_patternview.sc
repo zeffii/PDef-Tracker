@@ -1,6 +1,16 @@
 s.boot;
 
+
 (
+
+~include = { | path |
+    ~basspath = thisProcess.nowExecutingPath.dirname;
+    ~filepath_utils = ~basspath ++ path;
+    ~filepath_utils.postln;
+    ~filepath_utils.loadPaths;
+};
+
+~include.value("/ptrk_utils.scd");
 
 ~repeat_str = { |str, num_times|
     var empty_str = "";
@@ -116,6 +126,8 @@ u.keyDownAction = {
     // [keycode].postln; //, modifiers, unicode].postln;
     // ~cursor_highlight.value(keycode);
     // u.refresh;
+    "yes".postln;
+    ~keycode_to_note.value(keycode, 6).postln;
 };
 
 // caret
