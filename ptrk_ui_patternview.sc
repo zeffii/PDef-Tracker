@@ -23,6 +23,7 @@ s.boot;
 ~subcell_color = Color(0.6, 0.8, 0.88, 1.0);
 ~cell_x_offset = 4;
 ~cell_y_offset = 2;
+~patternview_font = Font("Fixedsys", 13);
 
 // cell variables
 ~split = 0.36;
@@ -46,6 +47,7 @@ Window.closeAll;
 w = Window.new("ptrk", Rect.new(1140, 530, 760, 520))
     .front
     .alwaysOnTop_(true);
+w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 
 u = UserView(w, Rect(60,43, 750, 500))
     .backColor_(Color(0.72, 0.82, 0.89, 1.0));
@@ -72,7 +74,7 @@ u.drawFunc_{ |tview|
                     if (ndx == 7, {
                         ~tv.stringColor = Color(0.53, 0.73, 0.93, 1.0);
                     });
-                    ~tv.font = Font("Fixedsys", 13);
+                    ~tv.font = ~patternview_font;
                     ~tv.background = ~cell_color
 
                 },{});
