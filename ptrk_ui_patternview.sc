@@ -16,7 +16,6 @@ s.boot;
         7, {Color(0.53, 0.73, 0.93, 1.0)},
         {Color(0.98, 0.97, 0.97, 1.0)}
     );
-
 };
 
 ~text_font = "Consolas";
@@ -66,6 +65,24 @@ u = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
 ~xu = UserView(w, Rect(~p_offset_x, ~p_offset_y, ~char_width, ~cell_height));
 ~xu.backColor = Color(1.0, 0, 0, 0.2);
 
+~mu = UserView(w, Rect(~p_offset_x, 0, 200, ~p_offset_y));
+~mu.backColor = Color(0.13, 0.3, 0.5, 0.07); // Color.clear;
+
+~mu.drawFunc_{ |tview|
+    ~mutv = StaticText(~mu, Rect(0, 0, 80, ~cell_height));
+    ~mutv.string_("Song Name");
+    ~mutv.align = \right;
+    ~mutv.font = ~patternview_font;
+    ~mutv.stringColor = Color(0.9, 0.9, 0.9, 1.0);
+    // ~mutv.background = Color(0.4, 0.4, 0.4, 1.0);
+
+    ~mutp = StaticText(~mu, Rect(0, ~cell_height, 80, ~cell_height));
+    ~mutp.string_("Pattern");
+    ~mutp.align = \right;
+    ~mutp.font = ~patternview_font;
+    ~mutp.stringColor = Color(0.9, 0.9, 0.9, 1.0);
+    // ~mutp.background = Color.black;
+};
 
 u.drawFunc_{ |tview|
 
@@ -78,7 +95,7 @@ u.drawFunc_{ |tview|
 
             ~subcellx = 0;
             ~subcells.do { |vdx, ndx |
-                ~text_rect = Rect(~subcellx + xpos, ypos, vdx*~char_width, ~cell_height);
+                ~text_rect = Rect.new(~subcellx + xpos, ypos, vdx*~char_width, ~cell_height);
 
                 if (vdx > ~split, {
                     ~tv = StaticText(u, ~text_rect);
@@ -87,11 +104,10 @@ u.drawFunc_{ |tview|
                     ~tv.stringColor = ~subcell_string_color.value(ndx);
                     ~tv.font = ~patternview_font;
                     ~tv.background = ~cell_color
-
                 },{});
+
                 ~subcellx = (~subcellx + (~char_width * vdx));
             };
-
         };
     };
 
