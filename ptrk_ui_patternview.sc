@@ -52,6 +52,23 @@ tab / shift-tab   |  jump to next / previous  cell
 left / right      |  jump to next / previous  subcell
 up / down         |  updown cell, retaining subcell position.
 
+NNN DD VV AA BBBB
+... .. .. .. ....
+
++---------------+-----------------------------------------------------------+
+| NNN: note     | if (subcell cursor is in position 0 or 1), then edit note |
+|               | el if position 2: edit octave using numbers               |
+|               | don't progress subcell cursor to the right                |
++---------------+-----------------------------------------------------------+
+|  DD: device   | if position of cursor subcell is 3, accept valid input    |
+|               | and move to position 4                                    |
++---------------+-----------------------------------------------------------+
+|  VV: volume   | etc...
+|  AA: parameter|
+|BBBB: value    |
+
+
+
 */
 
 
