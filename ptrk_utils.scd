@@ -31,3 +31,16 @@
     };
     empty_str;
 };
+
+~cursor_cell = [0, 0];
+~cursor_highlight = {
+    | keycode, num_tracks, num_rows |
+    switch (keycode,
+        39, { ~cursor_cell[0] = ~cursor_cell[0] + 1 },    // right
+        37, { ~cursor_cell[0] = ~cursor_cell[0] - 1 },    // left
+        38, { ~cursor_cell[1] = ~cursor_cell[1] - 1 },    // up
+        40, { ~cursor_cell[1] = ~cursor_cell[1] + 1 }     // down
+    );
+    ~cursor_cell[0] = ~cursor_cell[0] % num_tracks;
+    ~cursor_cell[1] = ~cursor_cell[1] % num_rows;
+};

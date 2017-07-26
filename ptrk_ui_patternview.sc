@@ -137,18 +137,22 @@ u.drawFunc_{ |tview|
         };
     };
 
-u.keyDownAction = {
-    arg view, char, modifiers, unicode, keycode;
+u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // [keycode].postln; //, modifiers, unicode].postln;
     // ~cursor_highlight.value(keycode);
     // u.refresh;
     "yes".postln;
-    ~keycode_to_note.value(keycode, 6).postln;
 };
 
 // caret
 ~xu = UserView(u, Rect(0, 0, ~char_width, ~cell_height));
 ~xu.backColor = Color(1.0, 0, 0, 0.2);
+
+~xu.keyDownAction = { |view, char, modifiers, unicode, keycode|
+    // ~keycode_to_note.value(keycode, 6).postln;
+    ~cursor_highlight.value(keycode, ~num_cols, ~num_rows);
+    ~cursor_cell.postln;
+};
 
 
 }
