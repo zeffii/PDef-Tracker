@@ -12,13 +12,7 @@ s.boot;
 
 ~include.value("/ptrk_utils.scd");
 
-~repeat_str = { |str, num_times|
-    var empty_str = "";
-    num_times.do {
-        empty_str = (empty_str ++ str);
-    };
-    empty_str;
-};
+
 
 ~subcell_string_color = { |ndx|
     switch (ndx,
