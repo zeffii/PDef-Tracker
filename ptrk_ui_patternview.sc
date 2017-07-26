@@ -24,6 +24,8 @@ s.boot;
 ~cell_x_offset = 4;
 ~cell_y_offset = 2;
 ~patternview_font = Font("Fixedsys", 13);
+~p_offset_x = 60;
+~p_offset_y = 43;
 
 // cell variables
 ~split = 0.36;
@@ -49,8 +51,11 @@ w = Window.new("ptrk", Rect.new(1140, 530, 760, 520))
     .alwaysOnTop_(true);
 w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 
-u = UserView(w, Rect(60,43, 750, 500))
+u = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
     .backColor_(Color(0.72, 0.82, 0.89, 1.0));
+
+~xu = UserView(w, Rect(~p_offset_x, ~p_offset_y, ~char_width, ~cell_height));
+~xu.backColor = Color(1.0, 0, 0, 0.2);
 
 
 u.drawFunc_{ |tview|
