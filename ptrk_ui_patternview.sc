@@ -10,6 +10,15 @@ s.boot;
     empty_str;
 };
 
+~subcell_string_color = { |ndx|
+    switch (ndx,
+        6, {Color(0.78, 0.97, 0.77, 1.0)},
+        7, {Color(0.53, 0.73, 0.93, 1.0)},
+        {Color(0.98, 0.97, 0.97, 1.0)}
+    );
+
+};
+
 ~text_font = "Consolas";
 
 ~cell_darker = Color(0.5, 0.8, 0.9, 1.0);
@@ -75,10 +84,7 @@ u.drawFunc_{ |tview|
                     ~tv = StaticText(u, ~text_rect);
                     ~tv.string = ~repeat_str.value(".", vdx);
                     ~tv.align = \left;
-                    ~tv.stringColor = Color(0.98, 0.97, 0.97, 1.0);
-                    if (ndx == 7, {
-                        ~tv.stringColor = Color(0.53, 0.73, 0.93, 1.0);
-                    });
+                    ~tv.stringColor = ~subcell_string_color.value(ndx);
                     ~tv.font = ~patternview_font;
                     ~tv.background = ~cell_color
 
