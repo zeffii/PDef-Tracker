@@ -55,17 +55,22 @@ up / down         |  updown cell, retaining subcell position.
 NNN DD VV AA BBBB
 ... .. .. .. ....
 
-+---------------+-----------------------------------------------------------+
-| NNN: note     | if (subcell cursor is in position 0 or 1), then edit note |
-|               | el if position 2: edit octave using numbers               |
-|               | don't progress subcell cursor to the right                |
-+---------------+-----------------------------------------------------------+
-|  DD: device   | if position of cursor subcell is 3, accept valid input    |
-|               | and move to position 4                                    |
-+---------------+-----------------------------------------------------------+
-|  VV: volume   | etc...
+| progress down in step is above 0
++---------------+-------------------------------------------------------------+
+| NNN: note     | if (subcell cursor is in position 0 or 1), then edit note   |
+|               | el if position 2: edit octave using numbers                 |
+|               | don't progress subcell cursor to the right                  |
++---------------+-------------------------------------------------------------+
+|  DD: device   | if position of cursor subcell is 3, accept valid input      |
+|               | and move to position 4. if in 4 stay in 4 or progress down  |
++---------------+-------------------------------------------------------------+
+|  VV: volume   | if position of cursor subcell is 5, accept valid ints and   |
+|               | progress to 6, if in 6 stay in 6 or progress down           |
++---------------+
 |  AA: parameter|
++---------------+
 |BBBB: value    |
++---------------+-------------------------------------------------------------+
 
 
 
