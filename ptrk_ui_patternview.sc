@@ -62,9 +62,7 @@ w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 u = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
     .backColor_(Color(0.72, 0.82, 0.89, 1.0));
 
-~xu = UserView(w, Rect(~p_offset_x, ~p_offset_y, ~char_width, ~cell_height));
-~xu.backColor = Color(1.0, 0, 0, 0.2);
-
+// pattern and song info
 ~mu = UserView(w, Rect(~p_offset_x, 0, 200, ~p_offset_y));
 ~mu.backColor = Color(0.13, 0.3, 0.5, 0.07); // Color.clear;
 
@@ -111,6 +109,16 @@ u.drawFunc_{ |tview|
         };
     };
 
+u.keyDownAction = {
+    arg view, char, modifiers, unicode, keycode;
+    // [keycode].postln; //, modifiers, unicode].postln;
+    // ~cursor_highlight.value(keycode);
+    u.refresh;
+};
+
+// caret
+~xu = UserView(u, Rect(0, 0, ~char_width, ~cell_height));
+~xu.backColor = Color(1.0, 0, 0, 0.2);
 
 
 }
