@@ -10,9 +10,12 @@ Don't get excited yet, none of this works. If you can still read this message, t
 
 Here's the todo:
 
+**Milestone 0**
+
+- [x] make pattern UI navigatable
+
 **Milestone 1**
 
-- [ ] make pattern UI navigatable
 - [ ] make pattern data composable to a Pattern structure
 - [ ] make sample display UI ( loop details )
 - [ ] make sample amp ADSR 
@@ -44,5 +47,5 @@ If it gets this far more will come.
 
 # Current Progress
 
-![ptrkcapture](https://user-images.githubusercontent.com/619340/28489803-3ea48190-6ecc-11e7-9fc5-b84538a57ed3.png)
+See https://github.com/zeffii/PDef-Tracker/issues/1
 
