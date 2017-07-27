@@ -50,6 +50,11 @@ s.boot;
 ~total_cell_width = ~cell_width + ~cell_x_offset;
 ~total_rows_height = (~num_rows * (~cell_height + ~cell_y_offset)) - ~cell_y_offset;
 
+// ~get_caret_position = {
+//     ~cursor_subcell
+//     ~cursor_cell
+// }
+
 /*
 
 tab / shift-tab   |  jump to next / previous  cell
