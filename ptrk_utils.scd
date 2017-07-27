@@ -34,7 +34,7 @@
 
 ~cursor_cell = [0, 0];
 ~cursor_subcell = 0;
-~cursor_highlight = { | keycode, modifiers, num_tracks, num_rows |
+~cursor_position = { | keycode, modifiers, num_tracks, num_rows |
 
     ~chars = 13;  // per_cell
     switch (keycode,

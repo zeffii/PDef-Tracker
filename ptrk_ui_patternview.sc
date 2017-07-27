@@ -152,19 +152,25 @@ u.drawFunc_{ |tview|
 
 u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // [keycode].postln; //, modifiers, unicode].postln;
-    // ~cursor_highlight.value(keycode);
     // u.refresh;
     // keycode.postln;
 
 };
 
 // caret
-~xu = UserView(u, Rect(0, 0, ~char_width, ~cell_height));
-~xu.backColor = Color(1.0, 0, 0, 0.2);
+~xu = UserView(u, Rect(0, 0, (~total_cell_width*~num_cols), ~total_rows_height));
+//~xu.backColor = Color(1.0, 0, 0, 0.12);
+
+~xu.drawFunc_{ |tview|
+    Color(1.0, 0, 0, 0.3).setFill;
+    Pen.addRect(Rect(0, 0, ~char_width, ~cell_height));
+    Pen.fill;
+};
+
 
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // ~keycode_to_note.value(keycode, 6).postln;
-    ~cursor_highlight.value(keycode, modifiers, ~num_cols, ~num_rows);
+    ~cursor_position.value(keycode, modifiers, ~num_cols, ~num_rows);
     ~cursor_cell.postln;
     ~cursor_subcell.postln;
 };
