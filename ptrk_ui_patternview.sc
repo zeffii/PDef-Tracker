@@ -174,7 +174,7 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
 
 // caret
 ~xu = UserView(u, Rect(0, 0, (~total_cell_width*~num_cols), ~total_rows_height));
-//~xu.backColor = Color(1.0, 0, 0, 0.12);
+// ~xu.backColor = Color(1.0, 0, 0, 0.12);
 
 ~xu.drawFunc_{ |tview|
     ~pos = ~get_caret_position.value();
