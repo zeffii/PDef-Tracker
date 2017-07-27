@@ -13,6 +13,7 @@ Here's the todo:
 **Milestone 0**
 
 - [x] make pattern UI navigatable
+- [ ] make pattern data enterable
 - [ ] make data editable (UI and storage issue)
 
 **Milestone 1**
