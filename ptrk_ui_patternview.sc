@@ -53,7 +53,14 @@ s.boot;
 
 ~get_caret_position = {
     // subcell to x is not yet implemented.
-    ~xpos = (~total_cell_width * ~cursor_cell[1]) + ~cursor_subcell;
+    ~minx_disp = ~cursor_subcell * ~char_width;
+    ~xpos_add = case
+    {~cursor_subcell <= 2} { ~minx_disp }
+    {~cursor_subcell <= 4} { ~minx_disp + (~split*~char_width) }
+    {~cursor_subcell <= 6} { ~minx_disp + (2*~split*~char_width)
+    }{~minx_disp + (3*~split*~char_width)};
+
+    ~xpos = (~total_cell_width * ~cursor_cell[0]) + ~xpos_add.value(~cursor_subcell);
     ~ypos = ~cursor_cell[1] * ~total_cell_height;
     [~xpos, ~ypos];
 };
