@@ -4,7 +4,7 @@ Tracker implementation for Supercollider 3.x
 
 ## 
 
-Based loosely on ImpulseTracker, the ultimate tracker. This attempt is inspired by the frustration I face when using newer and cooler trackers like Buzz/buze/sunvox. I need something that's entirely controllable via keyboard, or at least most of the major editing/jazzing around features should not require mouse jockeying.
+Based loosely on ImpulseTracker, the ultimate tracker. This attempt is inspired by the frustration I face when using newer and cooler trackers like Buzz/buze/sunvox/renoise. I need something that's entirely controllable via keyboard, or at least most of the major editing/jazzing around features should not require mouse jockeying. I want to be able to script patterns or track them, or mix the ratio of either. I don't need it to look like a modern DAW, it can be butt ugly. I do need to be able to extend / modify fundamental features, and not rely on doing feature requests that may or may not ever be listened to (fuck that!).
 
 Don't get excited yet, none of this works. If you can still read this message, then it's not even usable yet. I also don't know SuperCollider language intimately yet - that being said UI coding is coming along nicely.
 
