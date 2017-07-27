@@ -46,6 +46,10 @@ s.boot;
 ~cell_height = 16;
 ~cell_width = (~subcells*~char_width).sum;
 
+//
+~total_cell_width = ~cell_width + ~cell_x_offset;
+~total_rows_height = (~num_rows * (~cell_height + ~cell_y_offset)) - ~cell_y_offset;
+
 /*
 
 tab / shift-tab   |  jump to next / previous  cell
@@ -102,7 +106,9 @@ u = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
     ~mutv.stringColor = Color(0.9, 0.9, 0.9, 1.0);
     // ~mutv.background = Color(0.4, 0.4, 0.4, 1.0);
 
-    ~mutp = StaticText(~mu, Rect(0, ~cell_height*~font_rescale, ~info_name_width, ~cell_height*~font_rescale));
+    ~mutp = StaticText(
+        ~mu,
+        Rect(0, ~cell_height*~font_rescale, ~info_name_width, ~cell_height*~font_rescale));
     ~mutp.string_("Pattern");
     ~mutp.align = \right;
     ~mutp.font = ~ui_font;
@@ -138,8 +144,6 @@ u.drawFunc_{ |tview|
 
      // draw dividers... maybe not?
     ~num_cols.do { |idx|
-        ~total_cell_width = (~cell_width + ~cell_x_offset);
-        ~total_rows_height = (~num_rows * (~cell_height + ~cell_y_offset)) - ~cell_y_offset;
         Color(0.3, 0.8, 0.98).setFill;
         Pen.addRect(Rect((~total_cell_width*(idx+1))-4, 0, 5, ~total_rows_height));
         Pen.fill;
@@ -150,7 +154,8 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // [keycode].postln; //, modifiers, unicode].postln;
     // ~cursor_highlight.value(keycode);
     // u.refresh;
-    "yes".postln;
+    modifiers.postln;
+    keycode.postln;
 };
 
 // caret
@@ -161,6 +166,7 @@ w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // ~keycode_to_note.value(keycode, 6).postln;
     ~cursor_highlight.value(keycode, ~num_cols, ~num_rows);
     ~cursor_cell.postln;
+    ~cursor_subcell.postln;
 };
 
 
