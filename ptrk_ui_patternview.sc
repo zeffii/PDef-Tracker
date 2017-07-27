@@ -154,8 +154,8 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // [keycode].postln; //, modifiers, unicode].postln;
     // ~cursor_highlight.value(keycode);
     // u.refresh;
-    modifiers.postln;
-    keycode.postln;
+    // keycode.postln;
+
 };
 
 // caret
@@ -164,7 +164,7 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
 
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // ~keycode_to_note.value(keycode, 6).postln;
-    ~cursor_highlight.value(keycode, ~num_cols, ~num_rows);
+    ~cursor_highlight.value(keycode, modifiers, ~num_cols, ~num_rows);
     ~cursor_cell.postln;
     ~cursor_subcell.postln;
 };

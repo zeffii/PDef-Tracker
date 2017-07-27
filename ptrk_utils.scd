@@ -35,16 +35,24 @@
 ~cursor_cell = [0, 0];
 ~cursor_subcell = 0;
 ~cursor_highlight = {
-    | keycode, num_tracks, num_rows |
-    ~chars = 12;  // per_cell
+    | keycode, modifiers, num_tracks, num_rows |
+
+    ~chars = 13;  // per_cell
     switch (keycode,
-        39, { ~cursor_subcell = (~cursor_subcell + 1) % ~chars }, // right
-        37, { ~cursor_subcell = (~cursor_subcell - 1) % ~chars }, // left
-        //.., { ~cursor_cell[0] = ~cursor_cell[0] + 1 },    // right  tab
-        //.., { ~cursor_cell[0] = ~cursor_cell[0] - 1 },    // left   shift-tab
-        38, { ~cursor_cell[1] = ~cursor_cell[1] - 1 },    // up
-        40, { ~cursor_cell[1] = ~cursor_cell[1] + 1 }     // down
+        39, {// move right one subcell or entire cell with shift modifier
+            if (modifiers.isShift,
+                {~cursor_cell[0] = ~cursor_cell[0] + 1 },
+                {~cursor_subcell = (~cursor_subcell + 1) % ~chars })  },
+
+        37, {// move left one subcell or entire cell with shift modifier
+            if (modifiers.isShift,
+                {~cursor_cell[0] = ~cursor_cell[0] - 1 },
+                {~cursor_subcell = (~cursor_subcell - 1) % ~chars })  },
+
+        38, { ~cursor_cell[1] = ~cursor_cell[1] - 1 }, // up
+        40, { ~cursor_cell[1] = ~cursor_cell[1] + 1 }  // down
     );
+
     ~cursor_cell[0] = ~cursor_cell[0] % num_tracks;
     ~cursor_cell[1] = ~cursor_cell[1] % num_rows;
 
