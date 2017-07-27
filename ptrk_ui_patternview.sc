@@ -48,12 +48,15 @@ s.boot;
 
 //
 ~total_cell_width = ~cell_width + ~cell_x_offset;
-~total_rows_height = (~num_rows * (~cell_height + ~cell_y_offset)) - ~cell_y_offset;
+~total_cell_height = ~cell_height + ~cell_y_offset;
+~total_rows_height = (~num_rows * ~total_cell_height) - ~cell_y_offset;
 
-// ~get_caret_position = {
-//     ~cursor_subcell
-//     ~cursor_cell
-// }
+~get_caret_position = {
+    // subcell to x is not yet implemented.
+    ~xpos = (~total_cell_width * ~cursor_cell[1]) + ~cursor_subcell;
+    ~ypos = ~cursor_cell[1] * ~total_cell_height;
+    [~xpos, ~ypos];
+};
 
 /*
 
@@ -167,8 +170,9 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
 //~xu.backColor = Color(1.0, 0, 0, 0.12);
 
 ~xu.drawFunc_{ |tview|
+    ~pos = ~get_caret_position.value();
     Color(1.0, 0, 0, 0.3).setFill;
-    Pen.addRect(Rect(0, 0, ~char_width, ~cell_height));
+    Pen.addRect(Rect(~pos[0], ~pos[1], ~char_width, ~cell_height));
     Pen.fill;
 };
 
@@ -178,6 +182,7 @@ w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     ~cursor_position.value(keycode, modifiers, ~num_cols, ~num_rows);
     ~cursor_cell.postln;
     ~cursor_subcell.postln;
+    ~xu.refresh;
 };
 
 
