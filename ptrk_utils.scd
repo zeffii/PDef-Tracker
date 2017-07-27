@@ -41,12 +41,20 @@
         39, {// move right one subcell or entire cell with shift modifier
             if (modifiers.isShift,
                 {~cursor_cell[0] = ~cursor_cell[0] + 1 },
-                {~cursor_subcell = (~cursor_subcell + 1) % ~chars })  },
+                {
+                    // flip to the cell to the right
+                    if (~cursor_subcell==12, { ~cursor_cell[0] = ~cursor_cell[0] + 1},{});
+
+                    ~cursor_subcell = (~cursor_subcell + 1) % ~chars })  },
 
         37, {// move left one subcell or entire cell with shift modifier
             if (modifiers.isShift,
                 {~cursor_cell[0] = ~cursor_cell[0] - 1 },
-                {~cursor_subcell = (~cursor_subcell - 1) % ~chars })  },
+                {
+                    // flip to the cell to the left to
+                    if (~cursor_subcell==0, { ~cursor_cell[0] = ~cursor_cell[0] - 1},{});
+
+                    ~cursor_subcell = (~cursor_subcell - 1) % ~chars })  },
 
         38, { ~cursor_cell[1] = ~cursor_cell[1] - 1 }, // up
         40, { ~cursor_cell[1] = ~cursor_cell[1] + 1 }  // down
