@@ -190,6 +190,7 @@ w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     ~cursor_cell.postln;
     ~cursor_subcell.postln;
     ~xu.refresh;
+    ~keycode_to_note.value(keycode, 4).postln;
 };
 
 

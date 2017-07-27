@@ -2,25 +2,45 @@
 
 ~keycode_to_note = {
     | keycode, octave |
+    ~oct_str = octave.asString;
+    ~oct_str_down = (octave - 1).asString;
+    ~oct_str_up = (octave + 1).asString;
     switch (keycode,
         // upper row of keyjazz keys
-        81, {"C-" ++ octave.asString;},  // q
-        50, {"C#" ++ octave.asString;},  // 2
-        87, {"D-" ++ octave.asString;},  // w
-        51, {"D#" ++ octave.asString;},  // 3
-        69, {"E-" ++ octave.asString;},  // e
-        82, {"F-" ++ octave.asString;},  // r
-        53, {"F#" ++ octave.asString;},  // 5
-        84, {"G-" ++ octave.asString;},  // t
-        54, {"G#" ++ octave.asString;},  // 6
-        89, {"A-" ++ octave.asString;},  // y
-        55, {"A#" ++ octave.asString;},  // 7
-        85, {"B-" ++ octave.asString;},  // u
-        73, {"C-" ++ (octave + 1).asString;},  // i
-        57, {"D#" ++ (octave + 1).asString;},  // 9
-        79, {"D-" ++ (octave + 1).asString;},  // o
-        48, {"D#" ++ (octave + 1).asString;},  // 0
-        80, {"E-" ++ (octave + 1).asString;}   // p
+        81, {"C-" ++ ~oct_str},  // q
+        50, {"C#" ++ ~oct_str},  // 2
+        87, {"D-" ++ ~oct_str},  // w
+        51, {"D#" ++ ~oct_str},  // 3
+        69, {"E-" ++ ~oct_str},  // e
+        82, {"F-" ++ ~oct_str},  // r
+        53, {"F#" ++ ~oct_str},  // 5
+        84, {"G-" ++ ~oct_str},  // t
+        54, {"G#" ++ ~oct_str},  // 6
+        89, {"A-" ++ ~oct_str},  // y
+        55, {"A#" ++ ~oct_str},  // 7
+        85, {"B-" ++ ~oct_str},  // u
+        73, {"C-" ++ ~oct_str_up},  // i
+        57, {"D#" ++ ~oct_str_up},  // 9
+        79, {"D-" ++ ~oct_str_up},  // o
+        48, {"D#" ++ ~oct_str_up},  // 0
+        80, {"E-" ++ ~oct_str_up},   // p
+        // lower row
+        90, {"C-" ++ ~oct_str_down},  // z
+        83, {"C#" ++ ~oct_str_down},  // s
+        88, {"D-" ++ ~oct_str_down},  // x
+        68, {"D#" ++ ~oct_str_down},  // d
+        67, {"E-" ++ ~oct_str_down},  // c
+        86, {"F-" ++ ~oct_str_down},  // v
+        71, {"F#" ++ ~oct_str_down},  // g
+        66, {"G-" ++ ~oct_str_down},  // b
+        72, {"G#" ++ ~oct_str_down},  // h
+        78, {"A-" ++ ~oct_str_down},  // n
+        74, {"A#" ++ ~oct_str_down},  // j
+        77, {"B-" ++ ~oct_str_down},  // m
+        188, {"C-" ++ ~oct_str},  // ,
+        // specials
+        192, {"==="},
+        49, {"^^^"}
     )
 };
 
