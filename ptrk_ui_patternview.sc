@@ -6,7 +6,7 @@ s.boot;
 ~include = { | path |
     ~basspath = thisProcess.nowExecutingPath.dirname;
     ~filepath_utils = ~basspath ++ path;
-    ~filepath_utils.postln;
+    ("including: " ++ ~filepath_utils).postln;
     ~filepath_utils.loadPaths;
 };
 
@@ -135,7 +135,16 @@ u.drawFunc_{ |tview|
                 ~subcellx = (~subcellx + (~char_width * vdx));
             };
         };
+
+     // draw dividers... maybe not?
+    ~num_cols.do { |idx|
+        ~total_cell_width = (~cell_width + ~cell_x_offset);
+        ~total_rows_height = (~num_rows * (~cell_height + ~cell_y_offset)) - ~cell_y_offset;
+        Color(0.3, 0.8, 0.98).setFill;
+        Pen.addRect(Rect((~total_cell_width*(idx+1))-4, 0, 5, ~total_rows_height));
+        Pen.fill;
     };
+};
 
 u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // [keycode].postln; //, modifiers, unicode].postln;
