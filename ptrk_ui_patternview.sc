@@ -15,15 +15,8 @@ s.boot;
 
 ~include.value("/ptrk_pattern_data.scd");
 ~include.value("/ptrk_utils.scd");
+~include.value("/ptrk_colors.scd");
 
-
-~subcell_string_color = { |ndx|
-    switch (ndx,
-        6, {Color(0.78, 0.97, 0.77, 1.0)},
-        7, {Color(0.53, 0.73, 0.93, 1.0)},
-        {Color(0.98, 0.97, 0.97, 1.0)}
-    );
-};
 
 ~cell_darker = Color(0.5, 0.8, 0.9, 1.0);
 ~cell_dark = Color(0.32, 0.82, 0.92, 1.0);
@@ -118,20 +111,14 @@ u.drawFunc_{ |tview|
 
                 if (vdx > ~split, {
                     ~tv = StaticText(u, ~text_rect);
-                    // ~tv.string = ~repeat_str.value(".", vdx);
+
                     ~named_cell = ~subcell_idx_to_name.value(ndx);
                     ~tv.string = ~pattern_matrix[jdx, idx][~named_cell];
                     ~tv.align = \left;
 
-                    // kludgy param highlighting... should be relocated into
-                    // subcell_string_color's function (changing param signature
-                    // to include value in tv.string)
-                    if (ndx == 7 && (~tv.string != "...."), {
-                        ~set_color = Color(0.38, 0.52, 0.98);
-                    },
-                    { ~set_color = ~subcell_string_color.value(ndx)});
+                    // this function call adjusts subcell colors depending on their content
+                    ~tv.stringColor = ~subcell_string_color.value(ndx, ~tv.string);
 
-                    ~tv.stringColor = ~set_color;
                     ~tv.font = ~patternview_font;
                     ~tv.background = ~cell_color
                 },{});

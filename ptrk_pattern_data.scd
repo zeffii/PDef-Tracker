@@ -28,7 +28,7 @@
 ~cell_empty2 = ~pattern_matrix[0, 3];
 ~cell_empty2[\NNN] = "E-5";
 ~cell_empty2[\DD] = "02";
-~cell_empty2[\VV] = "6A";
+~cell_empty2[\VV] = "5A";
 ~cell_empty2[\AA] = "05";
 ~cell_empty2[\XXYY] = "30A0";
 
