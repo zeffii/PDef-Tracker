@@ -70,7 +70,7 @@ s.boot;
 GUI.qt;
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(1140, 630, 760, 420))
+w = Window.new("ptrk", Rect.new(1340, 630, 560, 420))
     .front
     .alwaysOnTop_(true);
 w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
@@ -143,7 +143,7 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // [keycode].postln; //, modifiers, unicode].postln;
     // u.refresh;
     // keycode.postln;
-
+    ~keyboard_patternview_handler.value(keycode, modifiers);
 };
 
 // caret
