@@ -138,12 +138,13 @@ u.drawFunc_{ |tview|
 u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // [keycode].postln; //, modifiers, unicode].postln;
     // u.refresh;
+    // if (~keyboard_patternview_handler.value(~pattern_matrix, keycode, modifiers), {u.refresh},{});
     ~keyboard_patternview_handler.value(~pattern_matrix, keycode, modifiers);
 };
 
 // caret
 ~xu = UserView(u, Rect(0, 0, (~total_cell_width*~num_cols), ~total_rows_height));
-// ~xu.backColor = Color(1.0, 0, 0, 0.12);
+//~xu.backColor = Color(1.0, 0, 0, 0.12);
 
 ~xu.drawFunc_{ |tview|
     ~pos = ~get_caret_position.value();

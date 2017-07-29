@@ -120,7 +120,12 @@
 
     ~dx = case
     {~cursor_subcell < 2} {
-        ~keycode_to_note.value(keycode, 4);
+        ~keyvalue = ~keycode_to_note.value(keycode, 4);
+
+        if (~keyvalue.isString,
+            {pattern_matrix[~cursor_cell[0],~cursor_cell[1]][\NNN] = ~keyvalue;
+            true;
+        },{});
     }
     {~cursor_subcell == 3} {                       }
     {[3, 4].includes(~cursor_subcell)} {                     }
