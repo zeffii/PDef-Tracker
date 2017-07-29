@@ -99,7 +99,7 @@
 ~keyboard_patternview_handler = { |keycode, modifiers|
 
     /*
-    NNN DD VV AA XXYY
+    NNN DD VV AA|XXYY
 
     +---------------+-------------------------------------------------------------+
     | NNN: note     | if (subcell cursor is in position 0 or 1), then edit note   |
@@ -117,12 +117,14 @@
     |XXYY: value    |
     +---------------+-------------------------------------------------------------+
     */
-    "here".postln;
+    //"here".postln;
     ~dx = case
-        {subcell < 2} {                        }
-        {subcell == 3} {                       }
-        {(3, 4).includes(subcell)} {                     }
-        {(5, 6).includes(subcell)} {                     }
-        {(7, 8).includes(subcell)} {                     }
-        {(9, 10, 11, 12).includes(subcell)} {                     };
+    {~cursor_subcell < 2} {
+        ~keycode_to_note.value(keycode, 4).postln;
+    }
+    {~cursor_subcell == 3} {                       }
+    {[3, 4].includes(~cursor_subcell)} {                     }
+    {[5, 6].includes(~cursor_subcell)} {                     }
+    {[7, 8].includes(~cursor_subcell)} {                     }
+    {[9, 10, 11, 12].includes(~cursor_subcell)} {                     };
 };

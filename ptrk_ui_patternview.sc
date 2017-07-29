@@ -157,6 +157,9 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     Pen.fill;
 };
 
+~xu.keyDownAction = { |view, char, modifiers, unicode, keycode|
+    //~keyboard_patternview_handler.value(keycode, modifiers);
+};
 
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // ~keycode_to_note.value(keycode, 6).postln;
@@ -164,10 +167,11 @@ w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     //~cursor_cell.postln;
     //~cursor_subcell.postln;
     ~xu.refresh;
-    ~keycode_to_note.value(keycode, 4).postln;
+    //~keycode_to_note.value(keycode, 4).postln;
 };
 
 
 }
 
 );
+[3,4].includes(3);
