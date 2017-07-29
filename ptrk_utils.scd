@@ -96,7 +96,7 @@
         7, {\XXYY});
 };
 
-~keyboard_patternview_handler = { |keycode, modifiers|
+~keyboard_patternview_handler = { |pattern_matrix, keycode, modifiers|
 
     /*
     NNN DD VV AA|XXYY
@@ -117,10 +117,10 @@
     |XXYY: value    |
     +---------------+-------------------------------------------------------------+
     */
-    //"here".postln;
+
     ~dx = case
     {~cursor_subcell < 2} {
-        ~keycode_to_note.value(keycode, 4).postln;
+        ~keycode_to_note.value(keycode, 4);
     }
     {~cursor_subcell == 3} {                       }
     {[3, 4].includes(~cursor_subcell)} {                     }

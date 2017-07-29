@@ -8,7 +8,7 @@ s.boot;
 ~include = { | path |
     ~basspath = thisProcess.nowExecutingPath.dirname;
     ~filepath_utils = ~basspath ++ path;
-    ("including: " ++ ~filepath_utils).postln;
+    // ("including: " ++ ~filepath_utils).postln;
     ~filepath_utils.loadPaths;
 };
 
@@ -138,8 +138,7 @@ u.drawFunc_{ |tview|
 u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // [keycode].postln; //, modifiers, unicode].postln;
     // u.refresh;
-    // keycode.postln;
-    ~keyboard_patternview_handler.value(keycode, modifiers);
+    ~keyboard_patternview_handler.value(~pattern_matrix, keycode, modifiers);
 };
 
 // caret
@@ -167,4 +166,3 @@ w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
 }
 
 );
-[3,4].includes(3);
