@@ -87,6 +87,10 @@
 
 };
 
+~subcell_idx_to_name = { |ndx|
+    switch (ndx, 0, {\NNN}, 2, {\DD}, 4, {\VV}, 6, {\AA}, 7, {\XXYY} );
+};
+
 ~keyboard_patternview_handler = { |keycode, modifiers|
 
     /*

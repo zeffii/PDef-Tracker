@@ -3,6 +3,8 @@ s.boot;
 
 (
 
+
+
 ~include = { | path |
     ~basspath = thisProcess.nowExecutingPath.dirname;
     ~filepath_utils = ~basspath ++ path;
@@ -10,8 +12,9 @@ s.boot;
     ~filepath_utils.loadPaths;
 };
 
-~include.value("/ptrk_utils.scd");
 
+~include.value("/ptrk_pattern_data.scd");
+~include.value("/ptrk_utils.scd");
 
 
 ~subcell_string_color = { |ndx|
@@ -30,8 +33,6 @@ s.boot;
 ~ui_font = Font("Consolas", 10);
 
 // pattern variables
-~num_cols = 4;
-~num_rows = 16;
 ~subcell_color = Color(0.6, 0.8, 0.88, 1.0);
 ~cell_x_offset = 4;
 ~cell_y_offset = 2;
@@ -75,6 +76,7 @@ w = Window.new("ptrk", Rect.new(1140, 530, 760, 520))
 w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 
 u = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
+    .clearOnRefresh_(true)
     .backColor_(Color(0.72, 0.82, 0.89, 1.0));
 
 // pattern and song info
@@ -116,7 +118,9 @@ u.drawFunc_{ |tview|
 
                 if (vdx > ~split, {
                     ~tv = StaticText(u, ~text_rect);
-                    ~tv.string = ~repeat_str.value(".", vdx);
+                    // ~tv.string = ~repeat_str.value(".", vdx);
+                    ~named_cell = ~subcell_idx_to_name.value(ndx);
+                    ~tv.string = ~pattern_matrix[jdx, idx][~named_cell];
                     ~tv.align = \left;
                     ~tv.stringColor = ~subcell_string_color.value(ndx);
                     ~tv.font = ~patternview_font;

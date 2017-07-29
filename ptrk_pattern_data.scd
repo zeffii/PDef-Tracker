@@ -5,16 +5,15 @@
 
 ~pattern_data = { | num_cols, num_rows |
 
+    // " NNN DD VV AA XXYY "
+    ~mlist = List[\NNN,"...",\DD,"..",\VV,"..",\AA,"..",\XXYY,"...."];
     num_rows.do { |jdx|
         num_cols.do { |idx|
-            var mcell = Dictionary.with(*[
-                \a->1,
-                \b->2,
-                \c->3
-            ]);
-            ~pattern_matrix[idx, jdx] = "... .. .. .. ....";
+            ~pattern_matrix[idx, jdx] = Dictionary.newFrom(~mlist);
         };
     };
 
 
 };
+
+~pattern_data.value(~num_cols, ~num_rows);
