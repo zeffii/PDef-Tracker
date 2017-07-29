@@ -3,24 +3,20 @@ s.boot;
 
 (
 
+
+
 ~include = { | path |
     ~basspath = thisProcess.nowExecutingPath.dirname;
     ~filepath_utils = ~basspath ++ path;
-    ("including: " ++ ~filepath_utils).postln;
+    // ("including: " ++ ~filepath_utils).postln;
     ~filepath_utils.loadPaths;
 };
 
+
+~include.value("/ptrk_pattern_data.scd");
 ~include.value("/ptrk_utils.scd");
+~include.value("/ptrk_colors.scd");
 
-
-
-~subcell_string_color = { |ndx|
-    switch (ndx,
-        6, {Color(0.78, 0.97, 0.77, 1.0)},
-        7, {Color(0.53, 0.73, 0.93, 1.0)},
-        {Color(0.98, 0.97, 0.97, 1.0)}
-    );
-};
 
 ~cell_darker = Color(0.5, 0.8, 0.9, 1.0);
 ~cell_dark = Color(0.32, 0.82, 0.92, 1.0);
@@ -30,8 +26,6 @@ s.boot;
 ~ui_font = Font("Consolas", 10);
 
 // pattern variables
-~num_cols = 4;
-~num_rows = 16;
 ~subcell_color = Color(0.6, 0.8, 0.88, 1.0);
 ~cell_x_offset = 4;
 ~cell_y_offset = 2;
@@ -65,46 +59,17 @@ s.boot;
     [~xpos, ~ypos];
 };
 
-/*
-
-tab / shift-tab   |  jump to next / previous  cell
-left / right      |  jump to next / previous  subcell
-up / down         |  updown cell, retaining subcell position.
-
-NNN DD VV AA BBBB
-... .. .. .. ....
-
-| progress down in step is above 0
-+---------------+-------------------------------------------------------------+
-| NNN: note     | if (subcell cursor is in position 0 or 1), then edit note   |
-|               | el if position 2: edit octave using numbers                 |
-|               | don't progress subcell cursor to the right                  |
-+---------------+-------------------------------------------------------------+
-|  DD: device   | if position of cursor subcell is 3, accept valid input      |
-|               | and move to position 4. if in 4 stay in 4 or progress down  |
-+---------------+-------------------------------------------------------------+
-|  VV: volume   | if position of cursor subcell is 5, accept valid ints and   |
-|               | progress to 6, if in 6 stay in 6 or progress down           |
-+---------------+
-|  AA: parameter|
-+---------------+
-|BBBB: value    |
-+---------------+-------------------------------------------------------------+
-
-
-
-*/
-
 
 GUI.qt;
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(1140, 530, 760, 520))
+w = Window.new("ptrk", Rect.new(1340, 630, 560, 420))
     .front
     .alwaysOnTop_(true);
 w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 
 u = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
+    .clearOnRefresh_(true)
     .backColor_(Color(0.72, 0.82, 0.89, 1.0));
 
 // pattern and song info
@@ -146,9 +111,14 @@ u.drawFunc_{ |tview|
 
                 if (vdx > ~split, {
                     ~tv = StaticText(u, ~text_rect);
-                    ~tv.string = ~repeat_str.value(".", vdx);
+
+                    ~named_cell = ~subcell_idx_to_name.value(ndx);
+                    ~tv.string = ~pattern_matrix[jdx, idx][~named_cell];
                     ~tv.align = \left;
-                    ~tv.stringColor = ~subcell_string_color.value(ndx);
+
+                    // this function call adjusts subcell colors depending on their content
+                    ~tv.stringColor = ~subcell_string_color.value(ndx, ~tv.string);
+
                     ~tv.font = ~patternview_font;
                     ~tv.background = ~cell_color
                 },{});
@@ -168,8 +138,7 @@ u.drawFunc_{ |tview|
 u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // [keycode].postln; //, modifiers, unicode].postln;
     // u.refresh;
-    // keycode.postln;
-
+    ~keyboard_patternview_handler.value(~pattern_matrix, keycode, modifiers);
 };
 
 // caret
@@ -183,14 +152,14 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
     Pen.fill;
 };
 
+~xu.keyDownAction = { |view, char, modifiers, unicode, keycode|
+    //~keyboard_patternview_handler.value(keycode, modifiers);
+};
 
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
-    // ~keycode_to_note.value(keycode, 6).postln;
     ~cursor_position.value(keycode, modifiers, ~num_cols, ~num_rows);
-    ~cursor_cell.postln;
-    ~cursor_subcell.postln;
     ~xu.refresh;
-    ~keycode_to_note.value(keycode, 4).postln;
+
 };
 
 
