@@ -90,8 +90,7 @@
 ~keyboard_patternview_handler = { |keycode, modifiers|
 
     /*
-    NNN DD VV AA BBBB
-    ... .. .. .. ....
+    NNN DD VV AA XXYY
 
     +---------------+-------------------------------------------------------------+
     | NNN: note     | if (subcell cursor is in position 0 or 1), then edit note   |
@@ -106,7 +105,7 @@
     +---------------+
     |  AA: parameter|
     +---------------+
-    |BBBB: value    |
+    |XXYY: value    |
     +---------------+-------------------------------------------------------------+
     */
     "here".postln;
