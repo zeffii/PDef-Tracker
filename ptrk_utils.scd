@@ -88,7 +88,12 @@
 };
 
 ~subcell_idx_to_name = { |ndx|
-    switch (ndx, 0, {\NNN}, 2, {\DD}, 4, {\VV}, 6, {\AA}, 7, {\XXYY} );
+    switch (ndx,
+        0, {\NNN},
+        2, {\DD},
+        4, {\VV},
+        6, {\AA},
+        7, {\XXYY});
 };
 
 ~keyboard_patternview_handler = { |keycode, modifiers|
@@ -113,5 +118,11 @@
     +---------------+-------------------------------------------------------------+
     */
     "here".postln;
-
+    ~dx = case
+        {subcell < 2} {                        }
+        {subcell == 3} {                       }
+        {(3, 4).includes(subcell)} {                     }
+        {(5, 6).includes(subcell)} {                     }
+        {(7, 8).includes(subcell)} {                     }
+        {(9, 10, 11, 12).includes(subcell)} {                     };
 };
