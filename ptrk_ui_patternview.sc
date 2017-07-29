@@ -122,7 +122,16 @@ u.drawFunc_{ |tview|
                     ~named_cell = ~subcell_idx_to_name.value(ndx);
                     ~tv.string = ~pattern_matrix[jdx, idx][~named_cell];
                     ~tv.align = \left;
-                    ~tv.stringColor = ~subcell_string_color.value(ndx);
+
+                    // kludgy param highlighting... should be relocated into
+                    // subcell_string_color's function (changing param signature
+                    // to include value in tv.string)
+                    if (ndx == 7 && (~tv.string != "...."), {
+                        ~set_color = Color(0.38, 0.52, 0.98);
+                    },
+                    { ~set_color = ~subcell_string_color.value(ndx)});
+
+                    ~tv.stringColor = ~set_color;
                     ~tv.font = ~patternview_font;
                     ~tv.background = ~cell_color
                 },{});
@@ -162,12 +171,9 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
 };
 
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
-    // ~keycode_to_note.value(keycode, 6).postln;
     ~cursor_position.value(keycode, modifiers, ~num_cols, ~num_rows);
-    //~cursor_cell.postln;
-    //~cursor_subcell.postln;
     ~xu.refresh;
-    //~keycode_to_note.value(keycode, 4).postln;
+
 };
 
 
