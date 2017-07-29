@@ -58,14 +58,15 @@
 
     ~chars = 13;  // per_cell
     switch (keycode,
+
         39, {// move right one subcell or entire cell with shift modifier
             if (modifiers.isShift,
                 {~cursor_cell[0] = ~cursor_cell[0] + 1 },
                 {
                     // flip to the cell to the right
                     if (~cursor_subcell==12, { ~cursor_cell[0] = ~cursor_cell[0] + 1},{});
-
-                    ~cursor_subcell = (~cursor_subcell + 1) % ~chars })  },
+                    ~cursor_subcell = (~cursor_subcell + 1) % ~chars })
+        },
 
         37, {// move left one subcell or entire cell with shift modifier
             if (modifiers.isShift,
@@ -73,8 +74,8 @@
                 {
                     // flip to the cell to the left to
                     if (~cursor_subcell==0, { ~cursor_cell[0] = ~cursor_cell[0] - 1},{});
-
-                    ~cursor_subcell = (~cursor_subcell - 1) % ~chars })  },
+                    ~cursor_subcell = (~cursor_subcell - 1) % ~chars })
+        },
 
         38, { ~cursor_cell[1] = ~cursor_cell[1] - 1 }, // up
         40, { ~cursor_cell[1] = ~cursor_cell[1] + 1 }  // down
@@ -84,5 +85,30 @@
     ~cursor_cell[1] = ~cursor_cell[1] % num_rows;
 
 
+};
+
+~keyboard_patternview_handler = { |keycode, modifiers|
+
+    /*
+    NNN DD VV AA BBBB
+    ... .. .. .. ....
+
+    +---------------+-------------------------------------------------------------+
+    | NNN: note     | if (subcell cursor is in position 0 or 1), then edit note   |
+    |               | el if position 2: edit octave using numbers                 |
+    |               | don't progress subcell cursor to the right                  |
+    +---------------+-------------------------------------------------------------+
+    |  DD: device   | if position of cursor subcell is 3, accept valid input      |
+    |               | and move to position 4. if in 4 stay in 4 or progress down  |
+    +---------------+-------------------------------------------------------------+
+    |  VV: volume   | if position of cursor subcell is 5, accept valid ints and   |
+    |               | progress to 6, if in 6 stay in 6 or progress down           |
+    +---------------+
+    |  AA: parameter|
+    +---------------+
+    |BBBB: value    |
+    +---------------+-------------------------------------------------------------+
+    */
+    "here".postln;
 
 };

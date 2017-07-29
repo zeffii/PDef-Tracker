@@ -65,36 +65,6 @@ s.boot;
     [~xpos, ~ypos];
 };
 
-/*
-
-tab / shift-tab   |  jump to next / previous  cell
-left / right      |  jump to next / previous  subcell
-up / down         |  updown cell, retaining subcell position.
-
-NNN DD VV AA BBBB
-... .. .. .. ....
-
-| progress down in step is above 0
-+---------------+-------------------------------------------------------------+
-| NNN: note     | if (subcell cursor is in position 0 or 1), then edit note   |
-|               | el if position 2: edit octave using numbers                 |
-|               | don't progress subcell cursor to the right                  |
-+---------------+-------------------------------------------------------------+
-|  DD: device   | if position of cursor subcell is 3, accept valid input      |
-|               | and move to position 4. if in 4 stay in 4 or progress down  |
-+---------------+-------------------------------------------------------------+
-|  VV: volume   | if position of cursor subcell is 5, accept valid ints and   |
-|               | progress to 6, if in 6 stay in 6 or progress down           |
-+---------------+
-|  AA: parameter|
-+---------------+
-|BBBB: value    |
-+---------------+-------------------------------------------------------------+
-
-
-
-*/
-
 
 GUI.qt;
 Window.closeAll;
@@ -187,8 +157,8 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // ~keycode_to_note.value(keycode, 6).postln;
     ~cursor_position.value(keycode, modifiers, ~num_cols, ~num_rows);
-    ~cursor_cell.postln;
-    ~cursor_subcell.postln;
+    //~cursor_cell.postln;
+    //~cursor_subcell.postln;
     ~xu.refresh;
     ~keycode_to_note.value(keycode, 4).postln;
 };
