@@ -70,7 +70,7 @@ s.boot;
 GUI.qt;
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(1140, 530, 760, 520))
+w = Window.new("ptrk", Rect.new(1140, 630, 760, 420))
     .front
     .alwaysOnTop_(true);
 w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
