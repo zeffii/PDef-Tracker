@@ -125,7 +125,7 @@
         if (~keyvalue.isString,
             {
                 pattern_matrix[~cursor_cell[0],~cursor_cell[1]][\NNN] = ~keyvalue;
-                view.refresh;
+                1;
             });
     }
     {~cursor_subcell == 3} {                       }

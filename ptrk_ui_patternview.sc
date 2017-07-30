@@ -67,35 +67,25 @@ w = Window.new("ptrk", Rect.new(1340, 630, 560, 420))
     .alwaysOnTop_(true);
 w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 
+
 ~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
     .clearOnRefresh_(true)
-    .backColor_(Color(0.62, 0.87, 0.95));
+    .backColor_(Color(0.62, 0.87, 0.95, 0.2));
 
-// pattern and song info
-/*
-~mu = UserView(w, Rect(~p_offset_x, 0, 200, ~p_offset_y-16));
-~mu.backColor = Color(0.13, 0.3, 0.5, 0.07); // Color.clear;
 
-~mu.drawFunc_{ |tview|
-    ~info_name_width = 60;
-    ~font_rescale = 0.8;
-    ~mutv = StaticText(~mu, Rect(0, 0, ~info_name_width, ~cell_height*~font_rescale));
-    ~mutv.string_("Song Name");
-    ~mutv.align = \right;
-    ~mutv.font = ~ui_font;
-    ~mutv.stringColor = Color(0.9, 0.9, 0.9, 1.0);
-    // ~mutv.background = Color(0.4, 0.4, 0.4, 1.0);
+// caret
+~xu = UserView(w, Rect(~p_offset_x, ~p_offset_y, (~total_cell_width*~num_cols), ~total_rows_height));
+//~xu.alwaysOnTop_(true);
+//~xu.backColor = Color(0.3, 0.4, 0.4, 0.2);
 
-    ~mutp = StaticText(
-        ~mu,
-        Rect(0, ~cell_height*~font_rescale, ~info_name_width, ~cell_height*~font_rescale));
-    ~mutp.string_("Pattern");
-    ~mutp.align = \right;
-    ~mutp.font = ~ui_font;
-    ~mutp.stringColor = Color(0.9, 0.9, 0.9, 1.0);
-    // ~mutp.background = Color.black;
+~xu.drawFunc_{ |tview|
+    ~pos = ~get_caret_position.value();
+    Color(1.0, 0, 0, 0.3, 0.3).setFill;
+    Pen.addRect(Rect(~pos[0], ~pos[1], ~char_width, ~cell_height));
+    Pen.fill;
+    ["draw caret:", ~pos].postln;
+
 };
-*/
 
 ~pattern_view.drawFunc_{ |tview|
 
@@ -127,48 +117,16 @@ w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
                 ~subcellx = (~subcellx + (~char_width * vdx));
             };
         };
-
-
-    // draw dividers... maybe not?
-    /*
-    ~num_cols.do { |idx|
-        Color(0.3, 0.8, 0.98).setFill;
-        Pen.addRect(Rect((~total_cell_width*(idx+1))-4, 0, 5, ~total_rows_height));
-        Pen.fill;
     };
-    */
 };
 
-~pattern_view.keyDownAction = { |view, char, modifiers, unicode, keycode|
-    // this following handler calls u.refresh if it has to update the pattern details
-    // why does the refresh take longer each time a new note is added to the Note column?
-    ~keyboard_patternview_handler.value(view, ~pattern_matrix, keycode, modifiers);
-
-};
-
-// caret
-~xu = UserView(~pattern_view, Rect(0, 0, (~total_cell_width*~num_cols), ~total_rows_height));
-//~xu.backColor = Color(1.0, 0, 0, 0.12);
-
-~xu.drawFunc_{ |tview|
-    ~pos = ~get_caret_position.value();
-    Color(1.0, 0, 0, 0.3).setFill;
-    Pen.addRect(Rect(~pos[0], ~pos[1], ~char_width, ~cell_height));
-    Pen.fill;
-};
-
-~xu.keyDownAction = { |view, char, modifiers, unicode, keycode|
-    //~keyboard_patternview_handler.value(keycode, modifiers);
-};
 
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     ~cursor_position.value(keycode, modifiers, ~num_cols, ~num_rows);
-    // ~xu.clearDrawing;
+    ~m2 =~keyboard_patternview_handler.value(view, ~pattern_matrix, keycode, modifiers);
+    if (~m2.notNil, {~pattern_view.refresh},{'not a note'.postln});
     ~xu.refresh;
-
 };
 
-
-}
 
 );
