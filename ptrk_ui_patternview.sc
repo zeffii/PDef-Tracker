@@ -67,7 +67,7 @@ w = Window.new("ptrk", Rect.new(1340, 630, 560, 420))
     .alwaysOnTop_(true);
 w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 
-u = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
+~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
     .clearOnRefresh_(true)
     .backColor_(Color(0.62, 0.87, 0.95));
 
@@ -97,7 +97,7 @@ u = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
 };
 */
 
-u.drawFunc_{ |tview|
+~pattern_view.drawFunc_{ |tview|
 
     ~num_rows.do { |idx |
         ~cell_color = ~cell_colors[((idx % 4) < 1).asInteger];
@@ -111,7 +111,7 @@ u.drawFunc_{ |tview|
                 ~text_rect = Rect.new(~subcellx + xpos, ypos, vdx*~char_width, ~cell_height);
 
                 if (vdx > ~split, {
-                    ~tv = StaticText(u, ~text_rect);
+                    ~tv = StaticText(~pattern_view, ~text_rect);
 
                     ~named_cell = ~subcell_idx_to_name.value(ndx);
                     ~tv.string = ~pattern_matrix[jdx, idx][~named_cell];
@@ -139,14 +139,15 @@ u.drawFunc_{ |tview|
     */
 };
 
-u.keyDownAction = { |view, char, modifiers, unicode, keycode|
+~pattern_view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     // this following handler calls u.refresh if it has to update the pattern details
     // why does the refresh take longer each time a new note is added to the Note column?
-    ~keyboard_patternview_handler.value(u, ~pattern_matrix, keycode, modifiers);
+    ~keyboard_patternview_handler.value(view, ~pattern_matrix, keycode, modifiers);
+
 };
 
 // caret
-~xu = UserView(u, Rect(0, 0, (~total_cell_width*~num_cols), ~total_rows_height));
+~xu = UserView(~pattern_view, Rect(0, 0, (~total_cell_width*~num_cols), ~total_rows_height));
 //~xu.backColor = Color(1.0, 0, 0, 0.12);
 
 ~xu.drawFunc_{ |tview|
@@ -162,6 +163,7 @@ u.keyDownAction = { |view, char, modifiers, unicode, keycode|
 
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     ~cursor_position.value(keycode, modifiers, ~num_cols, ~num_rows);
+    // ~xu.clearDrawing;
     ~xu.refresh;
 
 };
