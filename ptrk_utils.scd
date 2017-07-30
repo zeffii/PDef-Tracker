@@ -96,7 +96,7 @@
         7, {\XXYY});
 };
 
-~keyboard_patternview_handler = { |pattern_matrix, keycode, modifiers|
+~keyboard_patternview_handler = { |view, pattern_matrix, keycode, modifiers|
 
     /*
     NNN DD VV AA|XXYY
@@ -123,9 +123,10 @@
         ~keyvalue = ~keycode_to_note.value(keycode, 4);
 
         if (~keyvalue.isString,
-            {pattern_matrix[~cursor_cell[0],~cursor_cell[1]][\NNN] = ~keyvalue;
-            true;
-        },{});
+            {
+                pattern_matrix[~cursor_cell[0],~cursor_cell[1]][\NNN] = ~keyvalue;
+                view.refresh;
+            });
     }
     {~cursor_subcell == 3} {                       }
     {[3, 4].includes(~cursor_subcell)} {                     }

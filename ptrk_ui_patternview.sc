@@ -136,10 +136,9 @@ u.drawFunc_{ |tview|
 };
 
 u.keyDownAction = { |view, char, modifiers, unicode, keycode|
-    // [keycode].postln; //, modifiers, unicode].postln;
-    // u.refresh;
-    // if (~keyboard_patternview_handler.value(~pattern_matrix, keycode, modifiers), {u.refresh},{});
-    ~keyboard_patternview_handler.value(~pattern_matrix, keycode, modifiers);
+    // this following handler calls u.refresh if it has to update the pattern details
+    // why does the refresh take longer each time a new note is added to the Note column?
+    ~keyboard_patternview_handler.value(u, ~pattern_matrix, keycode, modifiers);
 };
 
 // caret
