@@ -3,8 +3,6 @@ s.boot;
 
 (
 
-
-
 ~include = { | path |
     ~basspath = thisProcess.nowExecutingPath.dirname;
     ~filepath_utils = ~basspath ++ path;
@@ -45,8 +43,8 @@ s.boot;
 ~total_rows_height = (~num_rows * ~total_cell_height) - ~cell_y_offset;
 
 ~get_caret_position = {
-    // subcell to x is not yet implemented.
     ~minx_disp = ~cursor_subcell * ~char_width;
+
     ~xpos_add = case
     {~cursor_subcell <= 2} { ~minx_disp }
     {~cursor_subcell <= 4} { ~minx_disp + (~split*~char_width) }
@@ -69,16 +67,14 @@ w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 
 
 ~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
-    .clearOnRefresh_(true)
     .backColor_(Color(0.62, 0.87, 0.95, 0.2));
 
 
-// caret
-~xu = UserView(w, Rect(~p_offset_x, ~p_offset_y, (~total_cell_width*~num_cols), ~total_rows_height));
+~caret = UserView(w, Rect(~p_offset_x, ~p_offset_y, (~total_cell_width*~num_cols), ~total_rows_height));
 //~xu.alwaysOnTop_(true);
 //~xu.backColor = Color(0.3, 0.4, 0.4, 0.2);
 
-~xu.drawFunc_{ |tview|
+~caret.drawFunc_{ |tview|
     ~pos = ~get_caret_position.value();
     Color(1.0, 0, 0, 0.3, 0.3).setFill;
     Pen.addRect(Rect(~pos[0], ~pos[1], ~char_width, ~cell_height));
@@ -124,8 +120,12 @@ w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     ~cursor_position.value(keycode, modifiers, ~num_cols, ~num_rows);
     ~m2 =~keyboard_patternview_handler.value(view, ~pattern_matrix, keycode, modifiers);
-    if (~m2.notNil, {~pattern_view.refresh},{'not a note'.postln});
-    ~xu.refresh;
+
+    if (~m2.notNil,
+        {~pattern_view.refresh},
+        {'not a note'.postln}
+    );
+    ~caret.refresh;
 };
 
 
