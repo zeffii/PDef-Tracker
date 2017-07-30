@@ -40,7 +40,6 @@ s.boot;
 ~cell_height = 16;
 ~cell_width = (~subcells*~char_width).sum;
 
-//
 ~total_cell_width = ~cell_width + ~cell_x_offset;
 ~total_cell_height = ~cell_height + ~cell_y_offset;
 ~total_rows_height = (~num_rows * ~total_cell_height) - ~cell_y_offset;
@@ -70,9 +69,10 @@ w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 
 u = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
     .clearOnRefresh_(true)
-    .backColor_(Color(0.72, 0.82, 0.89, 1.0));
+    .backColor_(Color(0.62, 0.87, 0.95));
 
 // pattern and song info
+/*
 ~mu = UserView(w, Rect(~p_offset_x, 0, 200, ~p_offset_y-16));
 ~mu.backColor = Color(0.13, 0.3, 0.5, 0.07); // Color.clear;
 
@@ -95,6 +95,7 @@ u = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
     ~mutp.stringColor = Color(0.9, 0.9, 0.9, 1.0);
     // ~mutp.background = Color.black;
 };
+*/
 
 u.drawFunc_{ |tview|
 
@@ -121,18 +122,21 @@ u.drawFunc_{ |tview|
 
                     ~tv.font = ~patternview_font;
                     ~tv.background = ~cell_color
-                },{});
+                });
 
                 ~subcellx = (~subcellx + (~char_width * vdx));
             };
         };
 
-     // draw dividers... maybe not?
+
+    // draw dividers... maybe not?
+    /*
     ~num_cols.do { |idx|
         Color(0.3, 0.8, 0.98).setFill;
         Pen.addRect(Rect((~total_cell_width*(idx+1))-4, 0, 5, ~total_rows_height));
         Pen.fill;
     };
+    */
 };
 
 u.keyDownAction = { |view, char, modifiers, unicode, keycode|
