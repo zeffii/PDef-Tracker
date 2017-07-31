@@ -4,7 +4,7 @@
         6, {Color(0.78, 0.97, 0.77)},
         7, {
 
-            if (cellstr != "....", 
+            if (cellstr != "....",
                 { Color(0.38, 0.52, 0.98)},
                 { Color(0.53, 0.73, 0.93)})
         },
@@ -13,3 +13,10 @@
 
 
 };
+
+~subcell_color = Color(0.6, 0.8, 0.88, 1.0);
+
+~cell_darker = Color(0.5, 0.8, 0.9, 1.0);
+~cell_dark = Color(0.32, 0.82, 0.92, 1.0);
+~cell_light = Color(0.84, 0.84, 0.84, 1.0);
+~cell_colors = [~cell_darker, ~cell_dark, ~cell_light];

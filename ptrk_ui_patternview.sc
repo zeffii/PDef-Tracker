@@ -15,19 +15,13 @@ s.boot;
 ~include.value("/ptrk_utils.scd");
 ~include.value("/ptrk_colors.scd");
 
-
-~cell_darker = Color(0.5, 0.8, 0.9, 1.0);
-~cell_dark = Color(0.32, 0.82, 0.92, 1.0);
-~cell_light = Color(0.84, 0.84, 0.84, 1.0);
-~cell_colors = [~cell_darker, ~cell_dark, ~cell_light];
-
+// fontage
 ~ui_font = Font("Consolas", 10);
+~patternview_font = Font("Fixedsys", 13);
 
 // pattern variables
-~subcell_color = Color(0.6, 0.8, 0.88, 1.0);
 ~cell_x_offset = 4;
 ~cell_y_offset = 2;
-~patternview_font = Font("Fixedsys", 13);
 ~p_offset_x = 60;
 ~p_offset_y = 43;
 
