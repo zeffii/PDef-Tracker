@@ -57,11 +57,11 @@ Window.closeAll;
 w = Window.new("ptrk", Rect.new(1340, 630, 560, 420))
     .front
     .alwaysOnTop_(true);
-w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
+w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 
 
 ~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
-    .backColor_(Color(0.62, 0.87, 0.95, 0.2));
+    .backColor_(Color(0.62, 0.87, 0.95, 1.0));
 
 
 ~caret = UserView(w, Rect(~p_offset_x, ~p_offset_y, (~total_cell_width*~num_cols), ~total_rows_height));
@@ -91,7 +91,7 @@ w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
                 ~text_rect = Rect.new(~subcellx + xpos, ypos, vdx*~char_width, ~cell_height);
 
                 if (vdx > ~split, {
-                    ~tv = StaticText(~pattern_view, ~text_rect);
+                    ~tv = StaticText(tview, ~text_rect);
 
                     ~named_cell = ~subcell_idx_to_name.value(ndx);
                     ~tv.string = ~pattern_matrix[jdx, idx][~named_cell];
