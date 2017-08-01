@@ -14,7 +14,8 @@ Here's the todo:
 
 - [x] make pattern UI navigatable
 - [x] make data editable (UI and storage issue)
-- [ ] make pattern data enterable
+- [x] highlight pattern data according to function
+- [x] make pattern data enterable
 
 **Milestone 1**
 
