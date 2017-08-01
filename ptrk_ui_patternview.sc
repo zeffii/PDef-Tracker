@@ -54,19 +54,31 @@ s.boot;
 GUI.qt;
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(1340, 630, 560, 420))
+w = Window.new("ptrk", Rect.new(1040, 630, 880, 420))
     .front
     .alwaysOnTop_(true);
 w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 
 
-~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
+~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, 650, 500))
     .backColor_(Color(0.62, 0.87, 0.95, 1.0));
+
+~waveform_view = SoundFileView.new(w, Rect(580, ~p_offset_y, 298, 120));
+~waveform_view.waveColors = [Color.green(0.8), Color.green(0.8)];
+~waveform_view.setSelectionColor(0, Color.red);
+
+~fs1 = SoundFile.new;
+~fs1.openRead("C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_006.wav");
+// ~fs1.inspect;
+
+~waveform_view.soundfile = ~fs1;
+~waveform_view.read(0, ~fs1.numFrames);
+~waveform_view.refresh;
+//~waveform_view.selections.postln;
 
 
 ~caret = UserView(w, Rect(~p_offset_x, ~p_offset_y, (~total_cell_width*~num_cols), ~total_rows_height));
-//~xu.alwaysOnTop_(true);
-//~xu.backColor = Color(0.3, 0.4, 0.4, 0.2);
+
 
 ~caret.drawFunc_{ |tview|
     tview.removeAll;
@@ -113,7 +125,8 @@ w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
             };
         };
     };
-
+    // tview.children.size.postln;
+    "redraw".postln;
 };
 
 
