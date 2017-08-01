@@ -60,7 +60,7 @@ w = Window.new("ptrk", Rect.new(1040, 630, 880, 420))
 w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 
 
-~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, 650, 500))
+~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, ~total_cell_width*~num_cols, 300))
     .backColor_(Color(0.62, 0.87, 0.95, 1.0));
 
 ~waveform_view = SoundFileView.new(w, Rect(580, ~p_offset_y, 298, 120));
@@ -74,6 +74,8 @@ w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 ~waveform_view.soundfile = ~fs1;
 ~waveform_view.read(0, ~fs1.numFrames);
 ~waveform_view.refresh;
+~waveform_view.timeCursorColor = Color.white;
+~waveform_view.gridOn = false;
 //~waveform_view.selections.postln;
 
 
