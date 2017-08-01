@@ -69,15 +69,20 @@ w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 //~xu.backColor = Color(0.3, 0.4, 0.4, 0.2);
 
 ~caret.drawFunc_{ |tview|
+    tview.removeAll;
     ~pos = ~get_caret_position.value();
     Color(1.0, 0, 0, 0.3, 0.3).setFill;
     Pen.addRect(Rect(~pos[0], ~pos[1], ~char_width, ~cell_height));
     Pen.fill;
-    ["draw caret:", ~pos].postln;
+    //["draw caret:", ~pos].postln;
 
 };
 
 ~pattern_view.drawFunc_{ |tview|
+
+    // this wipes the view's current children, else it would repeatedly stack??
+    // no evidence that .children grows in size..but it does make a noticable difference
+    tview.removeAll;
 
     ~num_rows.do { |idx |
         ~cell_color = ~cell_colors[((idx % 4) < 1).asInteger];
@@ -108,19 +113,22 @@ w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
             };
         };
     };
+
 };
 
 
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     ~cursor_position.value(keycode, modifiers, ~num_cols, ~num_rows);
-    ~m2 =~keyboard_patternview_handler.value(view, ~pattern_matrix, keycode, modifiers);
+    ~m2 = ~keyboard_patternview_handler.value(view, ~pattern_matrix, keycode, modifiers);
 
     if (~m2.notNil,
         {~pattern_view.refresh},
-        {'not a note'.postln}
+        {/*'not a note'.postln*/}
     );
     ~caret.refresh;
 };
 
 
-);
+)
+
+
