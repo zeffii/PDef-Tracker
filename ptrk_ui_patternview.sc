@@ -54,7 +54,7 @@ s.boot;
 GUI.qt;
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(1040, 630, 880, 420))
+w = Window.new("ptrk", Rect.new(840, 630, 1080, 420))
     .front
     .alwaysOnTop_(true);
 w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
@@ -63,9 +63,11 @@ w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 ~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, ~total_cell_width*~num_cols, 300))
     .backColor_(Color(0.62, 0.87, 0.95, 1.0));
 
-~waveform_view = SoundFileView.new(w, Rect(580, ~p_offset_y, 298, 120));
-~waveform_view.waveColors = [Color.green(0.8), Color.green(0.8)];
-~waveform_view.setSelectionColor(0, Color.red);
+~waveform_wavecol = Color(0.47, 1.0, 0.5);
+~waveform_view = SoundFileView.new(w, Rect(580, ~p_offset_y, 480, 180));
+~waveform_view.waveColors = [~waveform_wavecol, ~waveform_wavecol];
+~waveform_view.setSelectionColor(0, Color(0.2, 0.4, 0.5));
+~waveform_view.background = Color.blue(0.24);
 
 ~fs1 = SoundFile.new;
 ~fs1.openRead("C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_006.wav");
@@ -74,10 +76,13 @@ w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 ~waveform_view.soundfile = ~fs1;
 ~waveform_view.read(0, ~fs1.numFrames);
 ~waveform_view.refresh;
-~waveform_view.timeCursorColor = Color.white;
+~waveform_view.timeCursorColor = Color(0.9, 0.4, 0.4);
+~waveform_view.timeCursorOn = true;
 ~waveform_view.gridOn = false;
 //~waveform_view.selections.postln;
-
+//~waveform_view.selectionStart(0);
+~waveform_view.setSelectionStart(0, 0);
+~waveform_view.setSelectionSize(0, 12345);
 
 ~caret = UserView(w, Rect(~p_offset_x, ~p_offset_y, (~total_cell_width*~num_cols), ~total_rows_height));
 
@@ -145,5 +150,3 @@ w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
 
 
 )
-
-
