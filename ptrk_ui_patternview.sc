@@ -15,19 +15,13 @@ s.boot;
 ~include.value("/ptrk_utils.scd");
 ~include.value("/ptrk_colors.scd");
 
-
-~cell_darker = Color(0.5, 0.8, 0.9, 1.0);
-~cell_dark = Color(0.32, 0.82, 0.92, 1.0);
-~cell_light = Color(0.84, 0.84, 0.84, 1.0);
-~cell_colors = [~cell_darker, ~cell_dark, ~cell_light];
-
+// fontage
 ~ui_font = Font("Consolas", 10);
+~patternview_font = Font("Fixedsys", 13);
 
 // pattern variables
-~subcell_color = Color(0.6, 0.8, 0.88, 1.0);
 ~cell_x_offset = 4;
 ~cell_y_offset = 2;
-~patternview_font = Font("Fixedsys", 13);
 ~p_offset_x = 60;
 ~p_offset_y = 43;
 
@@ -63,11 +57,11 @@ Window.closeAll;
 w = Window.new("ptrk", Rect.new(1340, 630, 560, 420))
     .front
     .alwaysOnTop_(true);
-w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
+w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 
 
 ~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
-    .backColor_(Color(0.62, 0.87, 0.95, 0.2));
+    .backColor_(Color(0.62, 0.87, 0.95, 1.0));
 
 
 ~caret = UserView(w, Rect(~p_offset_x, ~p_offset_y, (~total_cell_width*~num_cols), ~total_rows_height));
@@ -75,15 +69,20 @@ w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
 //~xu.backColor = Color(0.3, 0.4, 0.4, 0.2);
 
 ~caret.drawFunc_{ |tview|
+    tview.removeAll;
     ~pos = ~get_caret_position.value();
     Color(1.0, 0, 0, 0.3, 0.3).setFill;
     Pen.addRect(Rect(~pos[0], ~pos[1], ~char_width, ~cell_height));
     Pen.fill;
-    ["draw caret:", ~pos].postln;
+    //["draw caret:", ~pos].postln;
 
 };
 
 ~pattern_view.drawFunc_{ |tview|
+
+    // this wipes the view's current children, else it would repeatedly stack??
+    // no evidence that .children grows in size..but it does make a noticable difference
+    tview.removeAll;
 
     ~num_rows.do { |idx |
         ~cell_color = ~cell_colors[((idx % 4) < 1).asInteger];
@@ -97,7 +96,7 @@ w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
                 ~text_rect = Rect.new(~subcellx + xpos, ypos, vdx*~char_width, ~cell_height);
 
                 if (vdx > ~split, {
-                    ~tv = StaticText(~pattern_view, ~text_rect);
+                    ~tv = StaticText(tview, ~text_rect);
 
                     ~named_cell = ~subcell_idx_to_name.value(ndx);
                     ~tv.string = ~pattern_matrix[jdx, idx][~named_cell];
@@ -114,19 +113,22 @@ w.view.backColor_(Color(0.13, 0.78, 0.9, 1.0));
             };
         };
     };
+
 };
 
 
 w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
     ~cursor_position.value(keycode, modifiers, ~num_cols, ~num_rows);
-    ~m2 =~keyboard_patternview_handler.value(view, ~pattern_matrix, keycode, modifiers);
+    ~m2 = ~keyboard_patternview_handler.value(view, ~pattern_matrix, keycode, modifiers);
 
     if (~m2.notNil,
         {~pattern_view.refresh},
-        {'not a note'.postln}
+        {/*'not a note'.postln*/}
     );
     ~caret.refresh;
 };
 
 
-);
+)
+
+
