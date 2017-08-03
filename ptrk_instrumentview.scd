@@ -3,7 +3,7 @@
     tview.removeAll;
 
     ~waveform_bgcol.setFill;
-    Pen.addRect(Rect(252,180, 228, 200));
+    Pen.addRect(Rect(312,180, 228, 200));
     Pen.fill;
 
     ~waveform_view = SoundFileView.new(~instrument_view, Rect(0, 0, 480, 180));
@@ -19,21 +19,31 @@
     ~waveform_view.gridOn = false;
     ~waveform_view.setSelectionStart(0, 0);
     ~waveform_view.setSelectionSize(0, 12345);
+    ~soundfile = ~waveform_view.soundfile;
+    ~active_path = PathName.new(~soundfile.path);
 
-    ~active_path = PathName.new(~waveform_view.soundfile.path);
+    ~left_text = 212;
+    ~right_text = 320;
+    ~info_vertical_start = 180;
+    ~info_vertical_dist = 17;
 
-    // Filename
-    ~id_filename = StaticText(tview, Rect(152, 180, 100,20));
-    ~id_filename.string = "Filename  ";
-    ~id_filename.align = \right;
-    // ~id_filename.background = Color.grey;
-    ~id_filename_val = StaticText(tview, Rect(260, 180, 200,20));
-    ~id_filename_val.string = ~active_path.fileName;
-    ~id_filename_val.stringColor = Color(0.62, 0.87, 0.95, 1.0);
+    ~info = [
+        ["Filename  ", ~active_path.fileName],
+        ["Rate  ", ~soundfile.sampleRate],
+        ["Length  ", ~soundfile.duration.asStringPrec(3) ++ " (seconds)"],
+        ["Format  ", ~soundfile.sampleFormat]
+    ];
 
-    // Speed
+    ~info.do { |item, idx|
+        ~this_y = ~info_vertical_start + (~info_vertical_dist * idx);
+        ~temp_item = StaticText(tview, Rect(~left_text, ~this_y, 100, 20));
+        ~temp_item.string = item[0];
+        ~temp_item.align = \right;
+        ~temp_item_val = StaticText(tview, Rect(~right_text, ~this_y, 200, 20));
+        ~temp_item_val.string = item[1];
+        ~temp_item_val.stringColor = ~info_text_color;
+    };
 
-    ~waveform_view.soundfile.sampleRate
 
     // Loop (pingpong/normal/off)
     // loop begin
@@ -42,5 +52,4 @@
     // SussBeg
     // SussEnd
     // Quality, channels
-    // Length (Frames)  ~fsl.duration
 }
