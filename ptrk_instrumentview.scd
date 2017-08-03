@@ -50,7 +50,7 @@
 
     // divider
     Pen.strokeColor = Color.white; // ~info_text_color;
-    Pen.width_(0.6);
+    Pen.width_(0.4);
     // Pen.lineDash_([0,1]);
         Pen.moveTo(Point( ~right_text, 10 + (~info_vertical_start + (~info_vertical_dist * 4))));
         Pen.lineTo(Point( ~right_text + 150, 10 + (~info_vertical_start + (~info_vertical_dist * 4))));
@@ -64,23 +64,29 @@
         ["Vib.Spd ", 0]
     ];
 
-    ~sample_sliders = [];
-    ~sample_numboxes = [];
-    ~sample_props.do { |item, idx|
+    // Global Sample state area
+    ~default_volume = StaticText(tview, Rect(0, ~info_vertical_start, 50, 20));
+    ~default_volume.string_(~sample_props[0][0]).align_(\right);
+    ~numbox1 = NumberBox(tview, Rect(200, ~info_vertical_start, 50, 20));
+    ~slider1 = Slider(tview, Rect(50, ~info_vertical_start, 150, 20)).action_({~numbox1.value_(~slider1.value)});
 
-        ~this_y = ~info_vertical_start + (~info_vertical_dist * idx);
+    ~this_y = ~info_vertical_start + (~info_vertical_dist * 1);
+    ~global_volume = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~global_volume.string_(~sample_props[1][0]).align_(\right);
+    ~numbox2 = NumberBox(tview, Rect(200, ~this_y, 50, 20));
+    ~slider2 = Slider(tview, Rect(50, ~this_y, 150, 20)).action_({~numbox2.value_(~slider2.value)});
 
-        ~item_default_volume = StaticText(tview, Rect(0, ~this_y, 50, 20));
-        ~item_default_volume.string_(item[0]).align_(\right);   //.backColor_(Color.grey);
+    ~this_y = ~info_vertical_start + (~info_vertical_dist * 2);
+    ~def_pan = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~def_pan.string_(~sample_props[2][0]).align_(\right);
+    ~numbox3 = NumberBox(tview, Rect(200, ~this_y, 50, 20));
+    ~slider3 = Slider(tview, Rect(50, ~this_y, 150, 20)).action_({~numbox3.value_(~slider3.value)});
 
-        ~sample_numboxes.add(NumberBox(tview, Rect(200, ~this_y, 50, 20)));
-        ~sample_sliders.add(Slider(tview, Rect(50, ~this_y, 150, 20)));
-    };
-    ~sample_sliders.do { |slider, jdx|
-        slider.action_({ ~sample_numboxes[jdx].value_(slider.value)});
-
-    };
-
+    ~this_y = ~info_vertical_start + (~info_vertical_dist * 3);
+    ~vib_speed = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~vib_speed.string_(~sample_props[3][0]).align_(\right);
+    ~numbox4 = NumberBox(tview, Rect(200, ~this_y, 50, 20));
+    ~slider4 = Slider(tview, Rect(50, ~this_y, 150, 20)).action_({~numbox4.value_(~slider4.value)});
 
     // Loop (pingpong/normal/off)
     // loop begin
