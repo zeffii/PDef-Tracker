@@ -67,26 +67,38 @@
     // Global Sample state area
     ~default_volume = StaticText(tview, Rect(0, ~info_vertical_start, 50, 20));
     ~default_volume.string_(~sample_props[0][0]).align_(\right);
-    ~numbox1 = NumberBox(tview, Rect(200, ~info_vertical_start, 50, 20));
-    ~slider1 = Slider(tview, Rect(50, ~info_vertical_start, 150, 20)).action_({~numbox1.value_(~slider1.value)});
+    ~numbox1 = NumberBox(tview, Rect(200, ~info_vertical_start+2, 50, 16));
+    ~slider1 = Slider(tview, Rect(50, ~info_vertical_start+2, 150, 16)).action_({~numbox1.value_(~slider1.value)});
+    ~slider1.knobColor = ~info_text_color;
+    ~slider1.backColor = Color(0.3, 0.8, 0.98);
+    ~slider1.focusColor = Color(0.3, 0.8, 0.98);
 
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 1);
     ~global_volume = StaticText(tview, Rect(0, ~this_y, 50, 20));
     ~global_volume.string_(~sample_props[1][0]).align_(\right);
-    ~numbox2 = NumberBox(tview, Rect(200, ~this_y, 50, 20));
-    ~slider2 = Slider(tview, Rect(50, ~this_y, 150, 20)).action_({~numbox2.value_(~slider2.value)});
+    ~numbox2 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
+    ~slider2 = Slider(tview, Rect(50, ~this_y+2, 150, 16)).action_({~numbox2.value_(~slider2.value)});
+    ~slider2.knobColor = ~info_text_color;
+    ~slider2.backColor = Color(0.3, 0.8, 0.98);
+    ~slider2.focusColor = Color(0.3, 0.8, 0.98);
 
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 2);
     ~def_pan = StaticText(tview, Rect(0, ~this_y, 50, 20));
     ~def_pan.string_(~sample_props[2][0]).align_(\right);
-    ~numbox3 = NumberBox(tview, Rect(200, ~this_y, 50, 20));
-    ~slider3 = Slider(tview, Rect(50, ~this_y, 150, 20)).action_({~numbox3.value_(~slider3.value)});
+    ~numbox3 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
+    ~slider3 = Slider(tview, Rect(50, ~this_y+2, 150, 16)).action_({~numbox3.value_(~slider3.value)});
+    ~slider3.knobColor = ~info_text_color;
+    ~slider3.backColor = Color(0.3, 0.8, 0.98);
+    ~slider3.focusColor = Color(0.3, 0.8, 0.98);
 
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 3);
     ~vib_speed = StaticText(tview, Rect(0, ~this_y, 50, 20));
     ~vib_speed.string_(~sample_props[3][0]).align_(\right);
-    ~numbox4 = NumberBox(tview, Rect(200, ~this_y, 50, 20));
-    ~slider4 = Slider(tview, Rect(50, ~this_y, 150, 20)).action_({~numbox4.value_(~slider4.value)});
+    ~numbox4 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
+    ~slider4 = Slider(tview, Rect(50, ~this_y+2, 150, 16)).action_({~numbox4.value_(~slider4.value)});
+    ~slider4.knobColor = ~info_text_color;
+    ~slider4.backColor = Color(0.3, 0.8, 0.98);
+    ~slider4.focusColor = Color(0.3, 0.8, 0.98);
 
     // Loop (pingpong/normal/off)
     // loop begin
