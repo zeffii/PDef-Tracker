@@ -13,16 +13,14 @@ s.boot;
 
 ~show_sample_paths = ["C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_006.wav"];
 ~active_sample_path = ~show_sample_paths[0];
+~fs1 = SoundFile.new;
+~fs1.openRead(~active_sample_path);
 
 ~include.value("/ptrk_pattern_data.scd");
 ~include.value("/ptrk_utils.scd");
 ~include.value("/ptrk_colors.scd");
 ~include.value("/ptrk_instrumentview.scd");   // ~ptrk_instr_view
 
-~fs1 = SoundFile.new;
-~fs1.openRead(~active_sample_path);
-// ~fsl.path.postln;
-//~fsl.sampleFormat.postln;
 
 
 // fontage
@@ -77,20 +75,6 @@ w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
     .backColor_(Color(0.62, 0.87, 0.95, 1.0));
 
 ~instrument_view.drawFunc = ~ptrk_instr_view;
-
-~waveform_view = SoundFileView.new(~instrument_view, Rect(0, 0, 480, 180));
-~waveform_view.waveColors = [~waveform_wavecol, ~waveform_wavecol];
-~waveform_view.setSelectionColor(0, ~waveform_selectioncol);
-~waveform_view.background = ~waveform_bgcol;
-
-~waveform_view.soundfile = ~fs1;
-~waveform_view.read(0, ~fs1.numFrames);
-~waveform_view.refresh;
-~waveform_view.timeCursorColor = ~waveform_timecursorcol;
-~waveform_view.timeCursorOn = true;
-~waveform_view.gridOn = false;
-~waveform_view.setSelectionStart(0, 0);
-~waveform_view.setSelectionSize(0, 12345);
 
 
 ~caret = UserView(w, Rect(~p_offset_x, ~p_offset_y, (~total_cell_width*~num_cols), ~total_rows_height));
