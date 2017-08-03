@@ -27,10 +27,14 @@
     ~info_vertical_start = 180;
     ~info_vertical_dist = 17;
 
+    // Sample Info Area
+    ~info_dur_time = ~soundfile.duration.asStringPrec(3) ++ " sec";
+    ~info_dur_frames = ~soundfile.numFrames.asString ++ " frames";
+    ~length_info = ~info_dur_time ++ " | " ++ ~info_dur_frames;
     ~info = [
         ["Filename  ", ~active_path.fileName],
         ["Rate  ", ~soundfile.sampleRate],
-        ["Length  ", ~soundfile.duration.asStringPrec(3) ++ " (seconds)"],
+        ["Length  ", ~length_info],
         ["Format  ", ~soundfile.sampleFormat]
     ];
 
@@ -43,6 +47,28 @@
         ~temp_item_val.string = item[1];
         ~temp_item_val.stringColor = ~info_text_color;
     };
+
+    // divider
+    Pen.strokeColor = Color.white; // ~info_text_color;
+    Pen.width_(0.6);
+    // Pen.lineDash_([0,1]);
+        Pen.moveTo(Point( ~right_text, 10 + (~info_vertical_start + (~info_vertical_dist * 4))));
+        Pen.lineTo(Point( ~right_text + 150, 10 + (~info_vertical_start + (~info_vertical_dist * 4))));
+    Pen.stroke;
+
+    // Global Sample state area
+    ~item_default_volume = StaticText(tview, Rect(0, ~info_vertical_start, 50, 20));
+    ~item_default_volume.string_("Def.Vol ")
+                        .align_(\right);
+                        //.backColor_(Color.grey);
+
+    ~numbox1 = NumberBox(tview, Rect(198, ~info_vertical_start, 50, 20));
+    ~slider1 = Slider(tview, Rect(50, ~info_vertical_start, 150, 20))
+        .action_({
+            ~numbox1.value_(~slider1.value);
+            // ~soundfile.cue(playNow: true, addAction: 2, group: 1);
+    });
+    ~slider1.action.value;
 
 
     // Loop (pingpong/normal/off)
