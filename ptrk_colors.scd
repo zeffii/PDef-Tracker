@@ -20,3 +20,9 @@
 ~cell_dark = Color(0.32, 0.82, 0.92, 1.0);
 ~cell_light = Color(0.84, 0.84, 0.84, 1.0);
 ~cell_colors = [~cell_darker, ~cell_dark, ~cell_light];
+
+
+~waveform_bgcol = Color.blue(0.24);
+~waveform_wavecol = Color(0.47, 1.0, 0.5);
+~waveform_selectioncol = Color(0.2, 0.4, 0.5);
+~waveform_timecursorcol = Color(0.9, 0.4, 0.4);

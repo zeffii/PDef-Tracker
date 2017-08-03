@@ -11,9 +11,19 @@ s.boot;
 };
 
 
+~show_sample_paths = ["C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_006.wav"];
+~active_sample_path = ~show_sample_paths[0];
+
 ~include.value("/ptrk_pattern_data.scd");
 ~include.value("/ptrk_utils.scd");
 ~include.value("/ptrk_colors.scd");
+~include.value("/ptrk_instrumentview.scd");   // ~ptrk_instr_view
+
+~fs1 = SoundFile.new;
+~fs1.openRead(~active_sample_path);
+// ~fsl.path.postln;
+//~fsl.sampleFormat.postln;
+
 
 // fontage
 ~ui_font = Font("Consolas", 10);
@@ -63,26 +73,25 @@ w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 ~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, ~total_cell_width*~num_cols, 300))
     .backColor_(Color(0.62, 0.87, 0.95, 1.0));
 
-~waveform_wavecol = Color(0.47, 1.0, 0.5);
-~waveform_view = SoundFileView.new(w, Rect(580, ~p_offset_y, 480, 180));
-~waveform_view.waveColors = [~waveform_wavecol, ~waveform_wavecol];
-~waveform_view.setSelectionColor(0, Color(0.2, 0.4, 0.5));
-~waveform_view.background = Color.blue(0.24);
+~instrument_view = UserView(w, Rect(580, ~p_offset_y, 480, 480))
+    .backColor_(Color(0.62, 0.87, 0.95, 1.0));
 
-~fs1 = SoundFile.new;
-~fs1.openRead("C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_006.wav");
-// ~fs1.inspect;
+~instrument_view.drawFunc = ~ptrk_instr_view;
+
+~waveform_view = SoundFileView.new(~instrument_view, Rect(0, 0, 480, 180));
+~waveform_view.waveColors = [~waveform_wavecol, ~waveform_wavecol];
+~waveform_view.setSelectionColor(0, ~waveform_selectioncol);
+~waveform_view.background = ~waveform_bgcol;
 
 ~waveform_view.soundfile = ~fs1;
 ~waveform_view.read(0, ~fs1.numFrames);
 ~waveform_view.refresh;
-~waveform_view.timeCursorColor = Color(0.9, 0.4, 0.4);
+~waveform_view.timeCursorColor = ~waveform_timecursorcol;
 ~waveform_view.timeCursorOn = true;
 ~waveform_view.gridOn = false;
-//~waveform_view.selections.postln;
-//~waveform_view.selectionStart(0);
 ~waveform_view.setSelectionStart(0, 0);
 ~waveform_view.setSelectionSize(0, 12345);
+
 
 ~caret = UserView(w, Rect(~p_offset_x, ~p_offset_y, (~total_cell_width*~num_cols), ~total_rows_height));
 
