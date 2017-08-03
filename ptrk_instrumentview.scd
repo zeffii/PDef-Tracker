@@ -57,18 +57,29 @@
     Pen.stroke;
 
     // Global Sample state area
-    ~item_default_volume = StaticText(tview, Rect(0, ~info_vertical_start, 50, 20));
-    ~item_default_volume.string_("Def.Vol ")
-                        .align_(\right);
-                        //.backColor_(Color.grey);
+    ~sample_props = [
+        ["Def.Vol ", 0.8],
+        ["Glbl.Vol ", 1.0],
+        ["Def.Pan ", 0.5],
+        ["Vib.Spd ", 0]
+    ];
 
-    ~numbox1 = NumberBox(tview, Rect(198, ~info_vertical_start, 50, 20));
-    ~slider1 = Slider(tview, Rect(50, ~info_vertical_start, 150, 20))
-        .action_({
-            ~numbox1.value_(~slider1.value);
-            // ~soundfile.cue(playNow: true, addAction: 2, group: 1);
-    });
-    ~slider1.action.value;
+    ~sample_sliders = [];
+    ~sample_numboxes = [];
+    ~sample_props.do { |item, idx|
+
+        ~this_y = ~info_vertical_start + (~info_vertical_dist * idx);
+
+        ~item_default_volume = StaticText(tview, Rect(0, ~this_y, 50, 20));
+        ~item_default_volume.string_(item[0]).align_(\right);   //.backColor_(Color.grey);
+
+        ~sample_numboxes.add(NumberBox(tview, Rect(200, ~this_y, 50, 20)));
+        ~sample_sliders.add(Slider(tview, Rect(50, ~this_y, 150, 20)));
+    };
+    ~sample_sliders.do { |slider, jdx|
+        slider.action_({ ~sample_numboxes[jdx].value_(slider.value)});
+
+    };
 
 
     // Loop (pingpong/normal/off)
