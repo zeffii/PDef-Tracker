@@ -3,8 +3,8 @@
 
     tview.removeAll;
 
-    ~waveform_bgcol.setFill;
-    Pen.addRect(Rect(312,180, 168, 200));
+    Color(0.1, 0.4, 0.74).setFill;
+    Pen.addRect(Rect(0,180, 480, 200));
     Pen.fill;
 
     ~waveform_view = SoundFileView.new(~instrument_view, Rect(0, 0, 480, 180));
@@ -33,16 +33,17 @@
     ~info_dur_frames = ~soundfile.numFrames.asString ++ " frames";
     ~length_info = ~info_dur_time ++ " | " ++ ~info_dur_frames;
     ~info = [
-        ["Filename  ", ~active_path.fileName],
-        ["Rate  ", ~soundfile.sampleRate],
-        ["Length  ", ~length_info],
-        ["Format  ", ~soundfile.sampleFormat]
+        ["Filename: ", ~active_path.fileName],
+        ["Rate: ", ~soundfile.sampleRate],
+        ["Length: ", ~length_info],
+        ["Format: ", ~soundfile.sampleFormat]
     ];
 
     ~info.do { |item, idx|
         ~this_y = ~info_vertical_start + (~info_vertical_dist * idx);
         ~temp_item = StaticText(tview, Rect(~left_text, ~this_y, 100, 20));
         ~temp_item.string = item[0];
+        ~temp_item.stringColor = ~info_text_color;
         ~temp_item.align = \right;
         ~temp_item_val = StaticText(tview, Rect(~right_text, ~this_y, 200, 20));
         ~temp_item_val.string = item[1];
@@ -70,6 +71,7 @@
     // This is fugly. I failed to do this in a loop.. but don't want to get bogged down in iteration 1. so.whatevs
     // Global Sample state area
     ~default_volume = StaticText(tview, Rect(0, ~info_vertical_start, 50, 20));
+    ~default_volume.stringColor = ~info_text_color;
     ~default_volume.string_(~sample_props[0][0]).align_(\right);
     ~numbox1 = NumberBox(tview, Rect(200, ~info_vertical_start+2, 50, 16));
     ~slider1 = Slider(tview, Rect(50, ~info_vertical_start+2, 150, 16)).action_({~numbox1.value_(~slider1.value)});
@@ -80,6 +82,7 @@
 
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 1);
     ~global_volume = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~global_volume.stringColor = ~info_text_color;
     ~global_volume.string_(~sample_props[1][0]).align_(\right);
     ~numbox2 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
     ~slider2 = Slider(tview, Rect(50, ~this_y+2, 150, 16)).action_({~numbox2.value_(~slider2.value)});
@@ -89,6 +92,7 @@
 
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 2);
     ~def_pan = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~def_pan.stringColor = ~info_text_color;
     ~def_pan.string_(~sample_props[2][0]).align_(\right);
     ~def_checkbox = CheckBox(tview, Rect(50, ~this_y, 20, 20));
     ~numbox3 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
@@ -99,6 +103,7 @@
 
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 3);
     ~vib_speed = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~vib_speed.stringColor = ~info_text_color;
     ~vib_speed.string_(~sample_props[3][0]).align_(\right);
     ~numbox4 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
     ~slider4 = Slider(tview, Rect(50, ~this_y+2, 150, 16)).action_({~numbox4.value_(~slider4.value)});
@@ -108,6 +113,7 @@
 
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 4);
     ~vib_depth = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~vib_depth.stringColor = ~info_text_color;
     ~vib_depth.string_(~sample_props[4][0]).align_(\right);
     ~numbox5 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
     ~slider5 = Slider(tview, Rect(50, ~this_y+2, 150, 16)).action_({~numbox5.value_(~slider5.value)});
@@ -117,6 +123,7 @@
 
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 5);
     ~vib_rate = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~vib_rate.stringColor = ~info_text_color;
     ~vib_rate.string_(~sample_props[5][0]).align_(\right);
     ~numbox6 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
     ~slider6 = Slider(tview, Rect(50, ~this_y+2, 150, 16)).action_({~numbox6.value_(~slider6.value)});
@@ -126,6 +133,7 @@
 
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 6);
     ~vib_wform = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~vib_wform.stringColor = ~info_text_color;
     ~vib_wform.string_("Vib.Form ").align_(\right);
 
     ~wform_list = PopUpMenu(tview, Rect(50, ~this_y+2, 150, 16))
