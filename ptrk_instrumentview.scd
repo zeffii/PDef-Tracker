@@ -3,7 +3,7 @@
 
     tview.removeAll;
 
-    Color(0.1, 0.4, 0.74).setFill;
+    Color(0.3, 0.7, 0.94).setFill;
     Pen.addRect(Rect(0,180, 480, 200));
     Pen.fill;
 
@@ -166,7 +166,7 @@
 
     //tview.decorator = FlowLayout(~sample_entries_rect);
     ~glist = EZListView.new(tview, ~sample_entries_rect);
-    28.do { |idx|
+    21.do { |idx|
         ~idx_string = idx.asString.padLeft(2, "0");
         if (idx==0, {~idx_string = ~idx_string ++ " " ++ ~active_path.fileName});
         ~glist.addItem(~idx_string, { |a| ("this is item" + idx.asString + a).postln });

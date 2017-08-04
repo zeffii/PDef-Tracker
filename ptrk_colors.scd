@@ -26,4 +26,4 @@
 ~waveform_wavecol = Color(0.47, 1.0, 0.5);
 ~waveform_selectioncol = Color(0.2, 0.4, 0.5);
 ~waveform_timecursorcol = Color(0.9, 0.4, 0.4);
-~info_text_color = Color(0.62, 0.87, 0.95, 1.0);
+~info_text_color = Color(0.92, 0.97, 0.99, 1.0);
