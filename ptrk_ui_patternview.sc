@@ -62,7 +62,7 @@ s.boot;
 GUI.qt;
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(840, 630, 1080, 420))
+w = Window.new("ptrk", Rect.new(640, 630, 1280, 420))
     .front
     .alwaysOnTop_(true);
 w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
@@ -71,7 +71,7 @@ w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 ~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, ~total_cell_width*~num_cols, 300))
     .backColor_(Color(0.62, 0.87, 0.95, 1.0));
 
-~instrument_view = UserView(w, Rect(580, ~p_offset_y, 480, 480))
+~instrument_view = UserView(w, Rect(580, ~p_offset_y, 680, 320))
     .backColor_(Color(0.62, 0.87, 0.95, 1.0));
 
 ~instrument_view.drawFunc = ~ptrk_instr_view;

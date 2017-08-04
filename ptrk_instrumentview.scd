@@ -1,9 +1,10 @@
+
 ~ptrk_instr_view = { |tview|
 
     tview.removeAll;
 
     ~waveform_bgcol.setFill;
-    Pen.addRect(Rect(312,180, 228, 200));
+    Pen.addRect(Rect(312,180, 168, 200));
     Pen.fill;
 
     ~waveform_view = SoundFileView.new(~instrument_view, Rect(0, 0, 480, 180));
@@ -61,9 +62,12 @@
         ["Def.Vol ", 0.8],
         ["Glbl.Vol ", 1.0],
         ["Def.Pan ", 0.5],
-        ["Vib.Spd ", 0]
+        ["Vib.Spd ", 0],
+        ["Vib.Amp ", 0],
+        ["Vib.Rate ", 0]
     ];
 
+    // This is fugly. I failed to do this in a loop.. but don't want to get bogged down in iteration 1. so.whatevs
     // Global Sample state area
     ~default_volume = StaticText(tview, Rect(0, ~info_vertical_start, 50, 20));
     ~default_volume.string_(~sample_props[0][0]).align_(\right);
@@ -72,6 +76,7 @@
     ~slider1.knobColor = ~info_text_color;
     ~slider1.backColor = Color(0.3, 0.8, 0.98);
     ~slider1.focusColor = Color(0.3, 0.8, 0.98);
+    //~sliderl.value = ~sample_props[0][1];
 
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 1);
     ~global_volume = StaticText(tview, Rect(0, ~this_y, 50, 20));
@@ -85,8 +90,9 @@
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 2);
     ~def_pan = StaticText(tview, Rect(0, ~this_y, 50, 20));
     ~def_pan.string_(~sample_props[2][0]).align_(\right);
+    ~def_checkbox = CheckBox(tview, Rect(50, ~this_y, 20, 20));
     ~numbox3 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
-    ~slider3 = Slider(tview, Rect(50, ~this_y+2, 150, 16)).action_({~numbox3.value_(~slider3.value)});
+    ~slider3 = Slider(tview, Rect(67, ~this_y+2, 133, 16)).action_({~numbox3.value_(~slider3.value)});
     ~slider3.knobColor = ~info_text_color;
     ~slider3.backColor = Color(0.3, 0.8, 0.98);
     ~slider3.focusColor = Color(0.3, 0.8, 0.98);
@@ -100,6 +106,46 @@
     ~slider4.backColor = Color(0.3, 0.8, 0.98);
     ~slider4.focusColor = Color(0.3, 0.8, 0.98);
 
+    ~this_y = ~info_vertical_start + (~info_vertical_dist * 4);
+    ~vib_depth = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~vib_depth.string_(~sample_props[4][0]).align_(\right);
+    ~numbox5 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
+    ~slider5 = Slider(tview, Rect(50, ~this_y+2, 150, 16)).action_({~numbox5.value_(~slider5.value)});
+    ~slider5.knobColor = ~info_text_color;
+    ~slider5.backColor = Color(0.3, 0.8, 0.98);
+    ~slider5.focusColor = Color(0.3, 0.8, 0.98);
+
+    ~this_y = ~info_vertical_start + (~info_vertical_dist * 5);
+    ~vib_rate = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~vib_rate.string_(~sample_props[5][0]).align_(\right);
+    ~numbox6 = NumberBox(tview, Rect(200, ~this_y+2, 50, 16));
+    ~slider6 = Slider(tview, Rect(50, ~this_y+2, 150, 16)).action_({~numbox6.value_(~slider6.value)});
+    ~slider6.knobColor = ~info_text_color;
+    ~slider6.backColor = Color(0.3, 0.8, 0.98);
+    ~slider6.focusColor = Color(0.3, 0.8, 0.98);
+
+    ~this_y = ~info_vertical_start + (~info_vertical_dist * 6);
+    ~vib_wform = StaticText(tview, Rect(0, ~this_y, 50, 20));
+    ~vib_wform.string_("Vib.Form ").align_(\right);
+
+    ~wform_list = PopUpMenu(tview, Rect(50, ~this_y+2, 150, 16))
+        .items_([ "Sin", "Saw", "Square", "Tri", "Rnd", "Osc" ])
+        .background_(Color.red)
+        .stringColor_(Color.white)
+        .action_({ arg menu;
+            [menu.value, menu.item].postln; // .value returns the integer
+        });
+
+    ~this_y = ~info_vertical_start + (~info_vertical_dist * 7);
+    ~playbutton = Button(tview, Rect(50, ~this_y+2, 80, 16))
+        .states_([["play", Color.black, Color.white]]);
+    //  .mouseDownAction_({
+    //      a = {EnvGen.kr(Env.adsr, doneAction:2) * SinOsc.ar(440, 0, 0.4)}.play;
+    //      })
+    //     .action_({ arg butt, mod;
+    //         a.release(0.3);
+    //     });
+
     // Loop (pingpong/normal/off)
     // loop begin
     // loop end
@@ -107,4 +153,16 @@
     // SussBeg
     // SussEnd
     // Quality, channels
+
+    ~sample_entries_rect = Rect(480,0,200,320);
+
+    //tview.decorator = FlowLayout(~sample_entries_rect);
+    ~glist = EZListView.new(tview, ~sample_entries_rect);
+    28.do { |idx|
+        ~idx_string = idx.asString.padLeft(2, "0");
+        if (idx==0, {~idx_string = ~idx_string ++ " " ++ ~active_path.fileName});
+        ~glist.addItem(~idx_string, { |a| ("this is item" + idx.asString + a).postln });
+    ~glist.setColors(Color.grey, Color.white);
+    };
 }
+
