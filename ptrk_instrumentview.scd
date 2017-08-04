@@ -19,7 +19,7 @@
     ~waveform_view.timeCursorOn = true;
     ~waveform_view.gridOn = false;
     ~waveform_view.setSelectionStart(0, 0);
-    ~waveform_view.setSelectionSize(0, 12345);
+    ~waveform_view.setSelectionSize(0, 345);
     ~soundfile = ~waveform_view.soundfile;
     ~active_path = PathName.new(~soundfile.path);
 
@@ -184,6 +184,7 @@
                     ~waveform_view.soundfile = ~fs1;
                     ~waveform_view.read(0, ~fs1.numFrames);
                     ~waveform_view.refresh;
+                    // tview.refresh;
             });
 
         });
