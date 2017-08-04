@@ -166,8 +166,10 @@
     ~sample_entries_rect = Rect(480,0,200,320);
 
     //tview.decorator = FlowLayout(~sample_entries_rect);
-    ~lixt_idx.postln;
-    ~glist = EZListView.new(tview, ~sample_entries_rect, initVal:~list_idx);
+
+    ~glist = EZListView.new(tview, ~sample_entries_rect);
+    //~glist.setColors(Color.grey, Color.white, Color.grey, Color.white);
+
     21.do { |idx|
         ~idx_string = idx.asString.padLeft(2, "0");
         if (~show_sample_paths[idx].size > 0,
@@ -177,6 +179,7 @@
         ~glist.addItem(~idx_string, {
             |a|
             ("this is item" + idx.asString + a).postln;
+
             if (~show_sample_paths[idx].size > 0,
                 {
                     ~active_sample_path = ~show_sample_paths[idx];
@@ -185,13 +188,19 @@
                     "loading new sound".postln;
                     ~list_idx = idx;
                     // tview.refresh;
+                    ~glist.value = ~list_idx;
                     ~waveform_view.read(0, ~fs1.numFrames);
                     ~waveform_view.refresh;
                     ~soundfile = ~waveform_view.soundfile;
-            });
-
+                },
+                {
+                    FileDialog({ |path|
+                        ~show_sample_paths[idx] = path;
+                        // tview.refresh
+                    },
+                    {"no path selected".postln; });  });
         });
-    ~glist.setColors(Color.grey, Color.white);
     };
+
 }
 
