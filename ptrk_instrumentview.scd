@@ -1,4 +1,5 @@
 
+
 ~ptrk_instr_view = { |tview|
 
     tview.removeAll;
@@ -165,7 +166,8 @@
     ~sample_entries_rect = Rect(480,0,200,320);
 
     //tview.decorator = FlowLayout(~sample_entries_rect);
-    ~glist = EZListView.new(tview, ~sample_entries_rect);
+    ~lixt_idx.postln;
+    ~glist = EZListView.new(tview, ~sample_entries_rect, initVal:~list_idx);
     21.do { |idx|
         ~idx_string = idx.asString.padLeft(2, "0");
         if (~show_sample_paths[idx].size > 0,
@@ -179,12 +181,13 @@
                 {
                     ~active_sample_path = ~show_sample_paths[idx];
                     ~fs1.openRead(~active_sample_path);
+                    idx.postln;
                     "loading new sound".postln;
+                    ~list_idx = idx;
                     // tview.refresh;
-                    ~waveform_view.soundfile = ~fs1;
                     ~waveform_view.read(0, ~fs1.numFrames);
                     ~waveform_view.refresh;
-                    // tview.refresh;
+                    ~soundfile = ~waveform_view.soundfile;
             });
 
         });

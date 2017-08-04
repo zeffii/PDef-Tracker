@@ -10,7 +10,7 @@ s.boot;
     ~filepath_utils.loadPaths;
 };
 
-
+~list_idx = 0;
 ~show_sample_paths = Array.fill(21, { "" });
 ~show_sample_paths[0] = "C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_006.wav";
 ~show_sample_paths[1] = "C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_008.wav";
