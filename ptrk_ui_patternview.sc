@@ -11,12 +11,11 @@ s.boot;
 };
 
 
-~show_sample_paths = ["C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_006.wav"];
-20.do { |idx|
-    ~show_sample_paths.add("");
-};
+~show_sample_paths = Array.fill(21, { "" });
+~show_sample_paths[0] = "C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_006.wav";
+~show_sample_paths[1] = "C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_008.wav";
 
-~show_sample_paths.postln;
+
 ~active_sample_path = ~show_sample_paths[0];
 ~fs1 = SoundFile.new;
 ~fs1.openRead(~active_sample_path);

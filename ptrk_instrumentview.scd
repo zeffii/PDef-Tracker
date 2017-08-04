@@ -168,8 +168,25 @@
     ~glist = EZListView.new(tview, ~sample_entries_rect);
     21.do { |idx|
         ~idx_string = idx.asString.padLeft(2, "0");
-        if (idx==0, {~idx_string = ~idx_string ++ " " ++ ~active_path.fileName});
-        ~glist.addItem(~idx_string, { |a| ("this is item" + idx.asString + a).postln });
+        if (~show_sample_paths[idx].size > 0,
+            ~fname = PathName.new(~show_sample_paths[idx]).fileName;
+            {~idx_string = ~idx_string ++ " " ++ ~fname});
+
+        ~glist.addItem(~idx_string, {
+            |a|
+            ("this is item" + idx.asString + a).postln;
+            if (~show_sample_paths[idx].size > 0,
+                {
+                    ~active_sample_path = ~show_sample_paths[idx];
+                    ~fs1.openRead(~active_sample_path);
+                    "loading new sound".postln;
+                    // tview.refresh;
+                    ~waveform_view.soundfile = ~fs1;
+                    ~waveform_view.read(0, ~fs1.numFrames);
+                    ~waveform_view.refresh;
+            });
+
+        });
     ~glist.setColors(Color.grey, Color.white);
     };
 }
