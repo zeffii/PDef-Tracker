@@ -19,13 +19,15 @@ Here's the todo:
 
 **Milestone 1**
 
+- [x] make sample display UI
+- [x] make sample bank storage
+- [x] make sample bank loader ui
+- [ ] make basic sampler synthdef
+- [ ] make basic sampler synthdef *UI*
 - [ ] make pattern data composable to a Pattern structure
-- [ ] make sample display UI ( loop details )
 - [ ] make sample amp ADSR 
 - [ ] make sample filter ADSR 
 - [ ] make sample panning ADSR 
-- [ ] make sample bank storage
-- [ ] make sample bank loader ui
 - [ ] make sample trigger pads (keyboard)
 
 **Milestone 2**

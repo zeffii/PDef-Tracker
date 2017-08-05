@@ -10,10 +10,22 @@ s.boot;
     ~filepath_utils.loadPaths;
 };
 
+~list_idx = 0;
+~show_sample_paths = Array.fill(21, { "" });
+~show_sample_paths[0] = "C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_006.wav";
+~show_sample_paths[1] = "C:\\Users\\zeffi\\Downloads\\samples\\chr_sam_008.wav";
+
+
+~active_sample_path = ~show_sample_paths[0];
+~fs1 = SoundFile.new;
+~fs1.openRead(~active_sample_path);
 
 ~include.value("/ptrk_pattern_data.scd");
 ~include.value("/ptrk_utils.scd");
 ~include.value("/ptrk_colors.scd");
+~include.value("/ptrk_instrumentview.scd");   // ~ptrk_instr_view
+
+
 
 // fontage
 ~ui_font = Font("Consolas", 10);
@@ -54,19 +66,23 @@ s.boot;
 GUI.qt;
 Window.closeAll;
 
-w = Window.new("ptrk", Rect.new(1340, 630, 560, 420))
+w = Window.new("ptrk", Rect.new(640, 630, 1280, 420))
     .front
     .alwaysOnTop_(true);
 w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
 
 
-~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, 750, 500))
+~pattern_view = UserView(w, Rect(~p_offset_x, ~p_offset_y, ~total_cell_width*~num_cols, 300))
     .backColor_(Color(0.62, 0.87, 0.95, 1.0));
+
+~instrument_view = UserView(w, Rect(580, ~p_offset_y, 680, 320))
+    .backColor_(Color(0.62, 0.87, 0.95, 1.0));
+
+~instrument_view.drawFunc = ~ptrk_instr_view;
 
 
 ~caret = UserView(w, Rect(~p_offset_x, ~p_offset_y, (~total_cell_width*~num_cols), ~total_rows_height));
-//~xu.alwaysOnTop_(true);
-//~xu.backColor = Color(0.3, 0.4, 0.4, 0.2);
+
 
 ~caret.drawFunc_{ |tview|
     tview.removeAll;
@@ -113,7 +129,8 @@ w.view.backColor_(Color(0.83, 0.88, 0.9, 1.0));
             };
         };
     };
-
+    // tview.children.size.postln;
+    "redraw".postln;
 };
 
 
@@ -130,5 +147,3 @@ w.view.keyDownAction = { |view, char, modifiers, unicode, keycode|
 
 
 )
-
-
