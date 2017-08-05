@@ -3,6 +3,7 @@
 ~ptrk_instr_view = { |tview|
 
     tview.removeAll;
+    ~show_sample_paths.postln;
 
     Color(0.3, 0.7, 0.94).setFill;
     Pen.addRect(Rect(0,180, 480, 200));
@@ -167,6 +168,7 @@
 
     //tview.decorator = FlowLayout(~sample_entries_rect);
 
+    ("showing new idx" ++ ~list_idx.asString).postln;
     ~glist = EZListView.new(tview, ~sample_entries_rect);
     //~glist.setColors(Color.grey, Color.white, Color.grey, Color.white);
 
@@ -180,27 +182,30 @@
             |a|
             ("this is item" + idx.asString + a).postln;
 
-            if (~show_sample_paths[idx].size > 0,
-                {
-                    ~active_sample_path = ~show_sample_paths[idx];
-                    ~fs1.openRead(~active_sample_path);
-                    idx.postln;
-                    "loading new sound".postln;
+            if (~show_sample_paths[idx].size > 0,{
+                ~active_sample_path = ~show_sample_paths[idx];
+                ~fs1.openRead(~active_sample_path);
+                idx.postln;
+                "loading new sound".postln;
+                ~list_idx = idx;
+                ~glist.value = ~list_idx;
+                ~waveform_view.read(0, ~fs1.numFrames);
+                ~waveform_view.refresh;
+                // this doesn't yet update the display info for the current wave.
+                //~soundfile = ~waveform_view.soundfile;
+            },
+            {
+                FileDialog({ |path|
+                    ~show_sample_paths[idx] = path[0];
                     ~list_idx = idx;
-                    // tview.refresh;
-                    ~glist.value = ~list_idx;
-                    ~waveform_view.read(0, ~fs1.numFrames);
-                    ~waveform_view.refresh;
-                    ~soundfile = ~waveform_view.soundfile;
+                    tview.refresh;
                 },
-                {
-                    FileDialog({ |path|
-                        ~show_sample_paths[idx] = path;
-                        // tview.refresh
-                    },
-                    {"no path selected".postln; });  });
+                {"no path selected".postln; });
+            });
+
         });
     };
 
+    ~glist.value = ~list_idx;
 }
 
