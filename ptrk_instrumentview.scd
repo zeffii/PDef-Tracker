@@ -146,15 +146,23 @@
             [menu.value, menu.item].postln; // .value returns the integer
         });
 
+    ~buff = Buffer.read(s, ~soundfile.path);
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 7);
     ~playbutton = Button(tview, Rect(50, ~this_y+2, 80, 16))
-        .states_([["play", Color.black, Color.white]]);
+        .states_([["play", Color.black, Color.white]])
+    //  .states_([["play", Color.black, Color.white]]);
     //  .mouseDownAction_({
     //      a = {EnvGen.kr(Env.adsr, doneAction:2) * SinOsc.ar(440, 0, 0.4)}.play;
     //      })
-    //     .action_({ arg butt, mod;
-    //         a.release(0.3);
+    //  .action_({ arg butt, mod;
+    //      a.release(0.3);
     //     });
+        .mouseDownAction_({
+             a = {EnvGen.kr(Env.adsr, doneAction:2) * PlayBuf.ar(2, ~buff)}.play;
+            })
+        .action_({ arg butt, mod;
+            a.release(0.3);
+            });
 
     // Loop (pingpong/normal/off)
     // loop begin
