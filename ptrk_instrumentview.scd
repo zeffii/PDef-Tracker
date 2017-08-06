@@ -30,6 +30,8 @@
     ~info_vertical_start = 180;
     ~info_vertical_dist = 17;
 
+    ~waveform_view.selections[0].postln;
+
     // Sample Info Area
     ~info_dur_time = ~soundfile.duration.asStringPrec(3) ++ " sec";
     ~info_dur_frames = ~soundfile.numFrames.asString ++ " frames";
@@ -146,19 +148,26 @@
             [menu.value, menu.item].postln; // .value returns the integer
         });
 
+    ~buffstart = 340;
+    ~bufflen = 4000;
+    // if (~waveform_view.selection[0], {
+    //     ~buffstart = ~waveform_view.selection[0][0];
+    //     ~bufflen = ~waveform_view.selection[0][1];
+    // });
     ~buff = Buffer.read(s, ~soundfile.path);
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 7);
     ~playbutton = Button(tview, Rect(50, ~this_y+2, 80, 16))
         .states_([["play", Color.black, Color.white]])
-    //  .states_([["play", Color.black, Color.white]]);
-    //  .mouseDownAction_({
-    //      a = {EnvGen.kr(Env.adsr, doneAction:2) * SinOsc.ar(440, 0, 0.4)}.play;
-    //      })
-    //  .action_({ arg butt, mod;
-    //      a.release(0.3);
-    //     });
         .mouseDownAction_({
-             a = {EnvGen.kr(Env.adsr, doneAction:2) * PlayBuf.ar(2, ~buff)}.play;
+
+            // buffer start / end are not both covered here, only buffer start.
+            if (~waveform_view.selections[0][0] > 0, {
+                ~buffstart = ~waveform_view.selections[0][0];
+                ~bufflen = ~waveform_view.selections[0][1];
+            ~buff = Buffer.read(s, ~soundfile.path, startFrame: ~buffstart); //, numFrames: ~bufflen);
+            });
+
+            a = {EnvGen.kr(Env.adsr, doneAction:2) * PlayBuf.ar(2, ~buff)}.play;
             })
         .action_({ arg butt, mod;
             a.release(0.3);
