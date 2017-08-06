@@ -21,7 +21,7 @@
     ~waveform_view.timeCursorOn = true;
     ~waveform_view.gridOn = false;
     ~waveform_view.setSelectionStart(0, 0);
-    ~waveform_view.setSelectionSize(0, 345);
+    //~waveform_view.setSelectionSize(0, 345);
     ~soundfile = ~waveform_view.soundfile;
     ~active_path = PathName.new(~soundfile.path);
 
@@ -148,12 +148,9 @@
             [menu.value, menu.item].postln; // .value returns the integer
         });
 
-    ~buffstart = 340;
-    ~bufflen = 4000;
-    // if (~waveform_view.selection[0], {
-    //     ~buffstart = ~waveform_view.selection[0][0];
-    //     ~bufflen = ~waveform_view.selection[0][1];
-    // });
+    ~buffstart = 0;
+    ~buffnumframes = 0;
+
     ~buff = Buffer.read(s, ~soundfile.path);
     ~this_y = ~info_vertical_start + (~info_vertical_dist * 7);
     ~playbutton = Button(tview, Rect(50, ~this_y+2, 80, 16))
@@ -161,11 +158,13 @@
         .mouseDownAction_({
 
             // buffer start / end are not both covered here, only buffer start.
-            if (~waveform_view.selections[0][0] > 0, {
-                ~buffstart = ~waveform_view.selections[0][0];
-                ~bufflen = ~waveform_view.selections[0][1];
-            ~buff = Buffer.read(s, ~soundfile.path, startFrame: ~buffstart); //, numFrames: ~bufflen);
-            });
+            if (~waveform_view.selections[0][0] > 0, {~buffstart = ~waveform_view.selections[0][0]});
+            if (~waveform_view.selections[0][1] > 0, {~buffnumframes = ~waveform_view.selections[0][1]});
+
+            if (~buffnumframes > 0, {
+                ~buff = Buffer.read(s, ~soundfile.path, startFrame: ~buffstart, numFrames: ~buffnumframes);
+            },
+            {   ~buff = Buffer.read(s, ~soundfile.path, startFrame: ~buffstart)});
 
             a = {EnvGen.kr(Env.adsr, doneAction:2) * PlayBuf.ar(2, ~buff)}.play;
             })
