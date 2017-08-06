@@ -188,16 +188,14 @@
                 idx.postln;
                 "loading new sound".postln;
                 ~list_idx = idx;
-                ~glist.value = ~list_idx;
-                ~waveform_view.read(0, ~fs1.numFrames);
-                ~waveform_view.refresh;
-                // this doesn't yet update the display info for the current wave.
-                //~soundfile = ~waveform_view.soundfile;
+                tview.refresh;
             },
             {
                 FileDialog({ |path|
                     ~show_sample_paths[idx] = path[0];
                     ~list_idx = idx;
+                    ~active_sample_path = path[0];
+                    ~fs1.openRead(~active_sample_path);
                     tview.refresh;
                 },
                 {"no path selected".postln; });
